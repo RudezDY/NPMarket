@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.guhecloud.rudez.npmarket.ui.contacts.ContactsActivity">
+
+
+    <!--搜索框-->
+    <com.nanchen.wavesidebar.SearchEditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_edit_bg"
+        android:drawableLeft="@mipmap/icon_search"
+        android:drawablePadding="5dp"
+        android:drawableStart="@mipmap/icon_search"
+        android:gravity="center_vertical"
+        android:hint="搜索"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:textSize="16sp"
+        app:drawableDel="@mipmap/edit_delete"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_contacts"
+            android:layout_marginRight="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!--字母导航栏-->
+        <com.nanchen.wavesidebar.WaveSideBarView
+            android:id="@+id/bar_side"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            app:sidebar_lazy_respond="false"
+            app:sidebar_text_color="@color/colorAccent"/>
+
+    </FrameLayout>
+
+</LinearLayout>
