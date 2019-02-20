@@ -6,13 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.adapter.ContactsAdapter;
 import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.ContactsContract;
 import com.guhecloud.rudez.npmarket.mvp.model.ContactModel;
 import com.guhecloud.rudez.npmarket.mvp.presenter.ContactsPresenter;
+import com.guhecloud.rudez.npmarket.util.ToastUtil;
 import com.nanchen.wavesidebar.SearchEditText;
 import com.nanchen.wavesidebar.Trans2PinYinUtil;
 import com.nanchen.wavesidebar.WaveSideBarView;
@@ -110,6 +113,13 @@ public class ContactsActivity extends RxActivity<ContactsPresenter> implements C
         });
         rv_contacts.addItemDecoration(decoration);
         rv_contacts.setAdapter(contactsAdapter);
+
+        contactsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ToastUtil.shortShow(showData.get(position).getName());
+            }
+        });
     }
 
 

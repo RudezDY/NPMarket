@@ -6,6 +6,7 @@ import android.app.Activity;
 import com.guhecloud.rudez.npmarket.di.module.ActivityMode;
 import com.guhecloud.rudez.npmarket.di.scope.AcitvityScope;
 import com.guhecloud.rudez.npmarket.ui.contacts.ContactsActivity;
+import com.guhecloud.rudez.npmarket.ui.menumanager.MenuManagerActivity;
 
 import dagger.Component;
 
@@ -19,5 +20,6 @@ public interface ActivityComponent {
 
 
     void Inject(ContactsActivity contactsActivity);
+    void Inject(MenuManagerActivity menuManagerActivity);
 
 }

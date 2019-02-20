@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="cover_bg">#66CCCCCC</color>
     <color name="white">#ffffff</color>
+    <color name="gray">#dddddd</color>
     <color name="colorToast">#ffffff</color>
 </resources>
