@@ -3,8 +3,10 @@ package com.guhecloud.rudez.npmarket.ui.menumanager;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
@@ -19,12 +21,18 @@ import com.guhecloud.rudez.npmarket.mvp.presenter.MenuManagerPresenter;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implements MenuMnagerContract.View {
+
+    @BindView(R.id.view_toolbar)
+    Toolbar view_toolbar;
+    @BindView(R.id.tv_toolbarRight)
+    TextView tv_toolbarRight;
+
 
     @BindView(R.id.rv_myApps)
     RecyclerView rv_myApps;
@@ -38,6 +46,9 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
     MyAppletAdapter myAppletAdapter;
     MoreAppletAdapter moreAppletAdapter;
 
+    final String MANAGE = "管理";
+    final String COMPLETE = "完成";
+
     @Override
     protected void injectObject() {
         getActivityComponent().Inject(this);
@@ -50,13 +61,48 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+        setToolBar(view_toolbar,"应用管理");
+        tv_toolbarRight.setVisibility(View.VISIBLE);
+        tv_toolbarRight.setText(MANAGE);
+
         initRv();
 
-        setRvChildClick();
+        setRvClick();
 
         setDrag();
     }
 
+    @OnClick(R.id.tv_toolbarRight)
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.tv_toolbarRight:
+                if (tv_toolbarRight.getText().toString().equals(MANAGE)){
+                    setEdit();
+                }else if (tv_toolbarRight.getText().toString().equals(COMPLETE)){
+                    setEditEnd();
+                }
+
+                break;
+        }
+    }
+
+    /**
+     * 转换为编辑状态
+     */
+    private void setEdit() {
+        tv_toolbarRight.setText(COMPLETE);
+        myAppletAdapter.setEdit();
+        moreAppletAdapter.setEdit();
+    }
+
+    /**
+     * 转换为编辑完成状态
+     */
+    private void setEditEnd() {
+        tv_toolbarRight.setText(MANAGE);
+        myAppletAdapter.setEditEnd();
+        moreAppletAdapter.setEditEnd();
+    }
 
     private void initRv() {
         if (allAppletData==null)
@@ -72,15 +118,31 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         rv_moreApps.setLayoutManager(new GridLayoutManager(this,4));
         myAppletAdapter=new MyAppletAdapter(R.layout.item_applet_mine,myAppletData,this);
         moreAppletAdapter=new MoreAppletAdapter(R.layout.item_applet_more,moreAppletData,this);
+        myAppletAdapter.openLoadAnimation();
+        moreAppletAdapter.openLoadAnimation();
         rv_myApps.setAdapter(myAppletAdapter);
         rv_moreApps.setAdapter(moreAppletAdapter);
     }
 
 
     /**
-     * 设置新增和删除
+     * 设置rv点击事件“新增、删除、点击、长按等
      */
-    private void setRvChildClick() {
+    private void setRvClick() {
+        myAppletAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                setEdit();
+                return true;
+            }
+        });
+        moreAppletAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                setEdit();
+                return true;
+            }
+        });
         //删除
         myAppletAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -109,8 +171,6 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         });
     }
 
-    AppletModel dragModel;
-    int dragPosStart;
     /**
      * 设置拖拽
      */
@@ -125,8 +185,6 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
             @Override
             public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
                 LogUtil.d("开始位置："+pos);
-                dragPosStart=pos;
-               dragModel= myAppletData.get(pos);
             }
 
             @Override
@@ -136,15 +194,14 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
 
             @Override
             public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+
                 LogUtil.d("结束位置："+pos);
-                Collections.swap(myAppletData,dragPosStart,pos);
-                for (int i=0;i<myAppletData.size();i++){
-                    LogUtil.i(myAppletData.get(i).getAppName());
+                //更新拖拽后的数据及顺序
+                myAppletData=myAppletAdapter.getData();
+                for (AppletModel model:myAppletData
+                     ) {
+                    LogUtil.i(model.getAppName());
                 }
-//                for (AppletModel model:myAppletData
-//                     ) {
-//                    LogUtil.i(model.getAppName());
-//                }
             }
         });
     }

@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 
+import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.app.App;
 
 import java.lang.ref.WeakReference;
@@ -43,7 +45,36 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initEventAndData(Bundle savedInstanceState);
 
+    protected void setToolBar(Toolbar toolbar, String title) {
+        setToolBar(toolbar, title, true);
+    }
 
+    protected void setToolBar(Toolbar toolbar, String title, boolean back) {
+        toolbar.setTitle("");
+        TextView tv_title=findViewById(R.id.tv_title);
+        tv_title.setText(title);
+        setSupportActionBar(toolbar);
+        if (back) {
+            if(getSupportActionBar()==null){
+                return;
+            }
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        } else {
+            if(getSupportActionBar()==null){
+                return;
+            }
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            toolbar.setNavigationOnClickListener(null);
+        }
+    }
 
 
     @Override

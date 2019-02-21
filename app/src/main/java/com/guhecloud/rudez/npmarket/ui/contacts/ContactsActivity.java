@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -26,6 +27,9 @@ import java.util.List;
 import butterknife.BindView;
 
 public class ContactsActivity extends RxActivity<ContactsPresenter> implements ContactsContract.View {
+
+    @BindView(R.id.view_toolbar)
+    Toolbar view_toolbar;
 
     @BindView(R.id.bar_side)
     WaveSideBarView bar_side;
@@ -51,6 +55,7 @@ public class ContactsActivity extends RxActivity<ContactsPresenter> implements C
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+        setToolBar(view_toolbar,"联系人");
         initRv();
         setSide_Search();
 

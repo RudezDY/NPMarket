@@ -2,6 +2,7 @@ package com.guhecloud.rudez.npmarket.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class MoreAppletAdapter extends BaseQuickAdapter<AppletModel,BaseViewHolder>{
     Context context;
     List<AppletModel> data;
+    boolean isEdit;
 
     public MoreAppletAdapter(int layoutResId, @Nullable List<AppletModel> data,Context context) {
         super(layoutResId, data);
@@ -37,7 +39,22 @@ public class MoreAppletAdapter extends BaseQuickAdapter<AppletModel,BaseViewHold
         TextView tv_name=helper.getView(R.id.tv_name);
         ImageView img_icon=helper.getView(R.id.img_icon);
         ImageView img_add=helper.getView(R.id.img_add);
+        if (isEdit){
+            img_add.setVisibility(View.VISIBLE);
+        }else {
+            img_add.setVisibility(View.GONE);
+        }
         helper.addOnClickListener(R.id.img_add);
         tv_name.setText(item.getAppName());
+    }
+
+    public void setEdit(){
+        isEdit=true;
+        notifyDataSetChanged();
+    }
+
+    public void setEditEnd(){
+        isEdit=false;
+        notifyDataSetChanged();
     }
 }

@@ -1,6 +1,7 @@
 package com.guhecloud.rudez.npmarket.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class MyAppletAdapter extends BaseItemDraggableAdapter<AppletModel,BaseViewHolder> {
     Context context;
     List<AppletModel> data;
+    boolean isEdit;
 
     public MyAppletAdapter(List<AppletModel> data,Context context) {
         super(data);
@@ -33,10 +35,26 @@ public class MyAppletAdapter extends BaseItemDraggableAdapter<AppletModel,BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, AppletModel item) {
+
         TextView tv_name=helper.getView(R.id.tv_name);
         ImageView img_icon=helper.getView(R.id.img_icon);
         ImageView img_delete=helper.getView(R.id.img_delete);
+        if (isEdit){
+            img_delete.setVisibility(View.VISIBLE);
+        }else {
+            img_delete.setVisibility(View.GONE);
+        }
         helper.addOnClickListener(R.id.img_delete);
         tv_name.setText(item.getAppName());
+    }
+
+    public void setEdit(){
+        isEdit=true;
+        notifyDataSetChanged();
+    }
+
+    public void setEditEnd(){
+        isEdit=false;
+        notifyDataSetChanged();
     }
 }

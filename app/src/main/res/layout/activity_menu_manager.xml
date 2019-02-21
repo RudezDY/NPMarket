@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.guhecloud.rudez.npmarket.ui.menumanager.MenuManagerActivity">
+    <include layout="@layout/view_toolbar"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
