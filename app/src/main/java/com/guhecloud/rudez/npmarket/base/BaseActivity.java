@@ -1,6 +1,7 @@
 package com.guhecloud.rudez.npmarket.base;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             toolbar.setNavigationOnClickListener(null);
         }
+    }
+
+    protected void startAty(Class aty){
+        Intent intent=new Intent();
+        intent.setClass(this,aty);
+        startActivity(intent);
     }
 
 

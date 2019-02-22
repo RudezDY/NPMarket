@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.adapter.MoreAppletAdapter;
 import com.guhecloud.rudez.npmarket.adapter.MyAppletAdapter;
 import com.guhecloud.rudez.npmarket.base.RxActivity;
-import com.guhecloud.rudez.npmarket.mvp.contract.MenuMnagerContract;
+import com.guhecloud.rudez.npmarket.mvp.contract.MenuManagerContract;
 import com.guhecloud.rudez.npmarket.mvp.model.AppletModel;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MenuManagerPresenter;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
@@ -26,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implements MenuMnagerContract.View {
+public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implements MenuManagerContract.View, View.OnClickListener {
 
     @BindView(R.id.view_toolbar)
     Toolbar view_toolbar;
@@ -72,7 +73,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         setDrag();
     }
 
-    @OnClick(R.id.tv_toolbarRight)
+    @OnClick({R.id.tv_toolbarRight})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.tv_toolbarRight:
@@ -81,8 +82,6 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
                 }else if (tv_toolbarRight.getText().toString().equals(COMPLETE)){
                     setEditEnd();
                 }
-
-                break;
         }
     }
 
@@ -122,6 +121,17 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         moreAppletAdapter.openLoadAnimation();
         rv_myApps.setAdapter(myAppletAdapter);
         rv_moreApps.setAdapter(moreAppletAdapter);
+
+        //设置我的应用footer（添加按钮）
+        View footer = LayoutInflater.from(this).inflate(R.layout.footer_add,null);
+        myAppletAdapter.addFooterView(footer);
+        footer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setEdit();
+            }
+        });
+        myAppletAdapter.setFooterViewAsFlow(true);
     }
 
 
@@ -143,6 +153,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
                 return true;
             }
         });
+
         //删除
         myAppletAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override

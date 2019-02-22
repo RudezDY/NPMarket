@@ -16,6 +16,7 @@ import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.ContactsContract;
 import com.guhecloud.rudez.npmarket.mvp.model.ContactModel;
 import com.guhecloud.rudez.npmarket.mvp.presenter.ContactsPresenter;
+import com.guhecloud.rudez.npmarket.ui.main.HomeBaseActivity;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
 import com.nanchen.wavesidebar.SearchEditText;
 import com.nanchen.wavesidebar.Trans2PinYinUtil;
@@ -26,10 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ContactsActivity extends RxActivity<ContactsPresenter> implements ContactsContract.View {
-
-    @BindView(R.id.view_toolbar)
-    Toolbar view_toolbar;
+public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implements ContactsContract.View {
 
     @BindView(R.id.bar_side)
     WaveSideBarView bar_side;
@@ -55,7 +53,6 @@ public class ContactsActivity extends RxActivity<ContactsPresenter> implements C
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        setToolBar(view_toolbar,"联系人");
         initRv();
         setSide_Search();
 
