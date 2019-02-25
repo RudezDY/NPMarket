@@ -1,27 +1,21 @@
 package com.guhecloud.rudez.npmarket.ui.main;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.mvp.contract.MainContract;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MainPresenter;
+import com.guhecloud.rudez.npmarket.util.GlideApp;
+import com.guhecloud.rudez.npmarket.util.ToastUtil;
 import com.nanchen.wavesidebar.SearchEditText;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 public class MainActivity extends HomeBaseActivity<MainPresenter> implements MainContract.View {
 
@@ -29,8 +23,8 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     ImageView img_scan;
     @BindView(R.id.et_search)
     SearchEditText et_search;
-    @BindView(R.id.banner)
-    ConvenientBanner banner;
+    @BindView(R.id.banner_guide_content)
+    BGABanner banner;
 
     @Override
     protected void injectObject() {
@@ -44,41 +38,38 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-//        banner.setPages(
-//                new CBViewHolderCreator() {
-//                    @Override
-//                    public LocalImageHolderView createHolder(View itemView) {
-//                        return new LocalImageHolderView(itemView);
-//                    }
-//
-//                    @Override
-//                    public int getLayoutId() {
-//                        return R.layout.item_localimage;
-//                    }
-//                }, localImages)
-//                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-////                .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-//                .setOnItemClickListener(this);
-//        //设置指示器的方向
-////                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
-////                .setOnPageChangeListener(this)//监听翻页事件
-//        ;
+        banner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
+            @Override
+            public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
+                GlideApp.with(thisActivity).load(model).centerCrop().into(itemView);
+            }
+        });
 
-//        banner.setManualPageable(false);//设置不能手动影响
-
-        //网络加载例子
         List<String> imgUrls=new ArrayList<>();
         imgUrls.add("http://d.5857.com/yushe_160219/005.jpg");
         imgUrls.add("http://old.bz55.com/uploads/allimg/141104/1-1411041K422.jpg");
         imgUrls.add("http://old.bz55.com/uploads/allimg/141104/1-1411041K425.jpg");
         imgUrls.add("http://up.enterdesk.com/edpic_360_360/1d/35/87/1d3587b3be79869936dc237bc0ecc119.jpg");
         imgUrls.add("http://www.xxthemes.com/article/UploadPic/2013-2/2013222238890171.jpg");
-//        banner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
-//            @Override
-//            public NetworkImageHolderView createHolder() {
-//                return new NetworkImageHolderView(LayoutInflater.from(MainActivity.this).inflate(R.layout.banner_item,null));
-//            }
-//        },imgUrls);
+        List<String > tipsList = new ArrayList<>();
+        for (int i=0;i<imgUrls.size();i++) {
+            tipsList.add("pic"+i);
+        }
+        /**
+         * 设置是否开启自动轮播，需要在 setData 方法之前调用，并且调了该方法后必须再调用一次 setData 方法
+         * 例如根据图片当图片数量大于 1 时开启自动轮播，等于 1 时不开启自动轮播
+         */
+        banner.setAutoPlayAble(imgUrls.size()>1);
+        banner.setAutoPlayInterval(3000);//间隔时间
+        banner.setAspectRatio(20f/9);//设置宽高比，float类型
+        banner.setData(imgUrls,tipsList);
+
+        banner.setDelegate(new BGABanner.Delegate<ImageView,String>() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
+                ToastUtil.shortShow("位置"+position+"  地址："+model);
+            }
+        });
     }
 
     @Override

@@ -25,14 +25,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     private Unbinder mUnBinder;
-    public Activity activity;
+    public BaseActivity thisActivity;
     public WeakReference<Activity> activityWeakReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        activity = this;
+        thisActivity = this;
         activityWeakReference = new WeakReference<Activity>(this);
         mUnBinder = ButterKnife.bind(this);
         App.getInstance().addActivity(activityWeakReference);
