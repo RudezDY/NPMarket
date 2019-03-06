@@ -6,12 +6,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.guhecloud.rudez.npmarket.ui.message.MessageActivity">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:orientation="vertical">
+    <include layout="@layout/view_toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_message"
+            android:overScrollMode="ifContentScrolls"
+            app:tabTextAppearance="@style/msgTabTextStyle"
+            app:tabIndicatorHeight="4dp"
+            app:tabIndicatorColor="@color/white"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabGravity="center"
+            app:tabPadding="4dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-</LinearLayout>
+    </LinearLayout>
     <include layout="@layout/layout_tab"/>
 </LinearLayout>

@@ -1,10 +1,8 @@
 package com.guhecloud.rudez.npmarket.ui.contacts;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.adapter.ContactsAdapter;
-import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.ContactsContract;
 import com.guhecloud.rudez.npmarket.mvp.model.ContactModel;
 import com.guhecloud.rudez.npmarket.mvp.presenter.ContactsPresenter;
@@ -43,7 +40,7 @@ public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implem
 
     @Override
     protected void injectObject() {
-        getActivityComponent().Inject(this);
+        getActivityComponent().inject(this);
     }
 
     @Override

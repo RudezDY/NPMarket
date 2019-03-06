@@ -116,4 +116,8 @@
         <attr name="android:scaleType"/>
     </declare-styleable>
 
+    <style name="msgTabTextStyle">
+        <item name="android:textSize">@dimen/msgTab_size</item>
+    </style>
+
 </resources>

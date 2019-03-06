@@ -28,7 +28,7 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
 
     @Override
     protected void injectObject() {
-        getActivityComponent().Inject(this);
+        getActivityComponent().inject(this);
     }
 
     @Override

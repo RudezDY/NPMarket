@@ -1,6 +1,5 @@
 package com.guhecloud.rudez.npmarket.ui.mine;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.guhecloud.rudez.npmarket.R;
@@ -13,7 +12,7 @@ public class MineActivity extends HomeBaseActivity<MinePresenter> implements Min
 
     @Override
     protected void injectObject() {
-        getActivityComponent().Inject(this);
+        getActivityComponent().inject(this);
     }
 
     @Override

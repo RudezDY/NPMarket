@@ -26,6 +26,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:support-v4:27.1.1'
     androidTestCompile('com.android.support:support-annotations:27.1.1') {
         force = true
     }
@@ -54,7 +55,8 @@ dependencies {
 //    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
 //    compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0-RC1'
     implementation "com.github.bumptech.glide:glide:4.8.0"
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'//需创建GlobalGlideConfig extends AppGlideModule 才可以使用GlideApp
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+//需创建GlobalGlideConfig extends AppGlideModule 才可以使用GlideApp
     compile "com.github.bumptech.glide:okhttp3-integration:4.8.0"//集成okhttp需要
 
     compile 'com.google.dagger:dagger:2.0.2'

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 
 import com.guhecloud.rudez.npmarket.di.module.FragmentModule;
 import com.guhecloud.rudez.npmarket.di.scope.FragmentScope;
+import com.guhecloud.rudez.npmarket.ui.message.MessageFragment;
 
 import dagger.Component;
 
@@ -24,6 +25,6 @@ public interface FragmentComponent {
 
     Context getContext();
 
-//    void inject(RecordEditFragment recordEditFragment);
+    void inject(MessageFragment messageFragment);
 
 }

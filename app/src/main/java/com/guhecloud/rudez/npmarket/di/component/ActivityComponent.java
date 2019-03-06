@@ -23,11 +23,11 @@ public interface ActivityComponent {
     Activity getActivity();
 
 
-    void Inject(ScanActivity scanActivity);
-    void Inject(ContactsActivity contactsActivity);
-    void Inject(MenuManagerActivity menuManagerActivity);
-    void Inject(MainActivity mainActivity);
-    void Inject(MessageActivity messageActivity);
-    void Inject(MineActivity mineActivity);
+    void inject(ScanActivity scanActivity);
+    void inject(ContactsActivity contactsActivity);
+    void inject(MenuManagerActivity menuManagerActivity);
+    void inject(MainActivity mainActivity);
+    void inject(MessageActivity messageActivity);
+    void inject(MineActivity mineActivity);
 
 }

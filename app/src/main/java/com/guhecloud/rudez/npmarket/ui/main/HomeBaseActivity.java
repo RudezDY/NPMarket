@@ -9,7 +9,6 @@ import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.ui.contacts.ContactsActivity;
 import com.guhecloud.rudez.npmarket.ui.message.MessageActivity;
 import com.guhecloud.rudez.npmarket.ui.mine.MineActivity;
-import com.guhecloud.rudez.npmarket.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,28 +30,32 @@ public abstract class HomeBaseActivity<T extends BasePresenter> extends RxActivi
 
 
     @OnClick({R.id.layout_tab0,R.id.layout_tab1,R.id.layout_tab2,R.id.layout_tab3})
-    public void onTabClick(View v){
+    public void onTabClick(View v){//处理tab栏点击事件
         String name=activityWeakReference.get().getLocalClassName();
         switch (v.getId()){
             case R.id.layout_tab0:
-                if (!name.contains("MainActivity"))
-                    startAty(MainActivity.class);
+                if (name.contains("MainActivity"))
+                    break;
+                startAty(MainActivity.class);
                 break;
             case R.id.layout_tab1:
-                if (!name.contains("MessageActivity"))
-                    startAty(MessageActivity.class);
+                if (name.contains("MessageActivity"))
+                    break;
+                startAty(MessageActivity.class);
                 if (!name.contains("MainActivity"))
                     finish();
                 break;
             case R.id.layout_tab2:
-                if (!name.contains("ContactsActivity"))
-                    startAty(ContactsActivity.class);
+                if (name.contains("ContactsActivity"))
+                    break;;
+                startAty(ContactsActivity.class);
                 if (!name.contains("MainActivity"))
                     finish();
                 break;
             case R.id.layout_tab3:
-                if (!name.contains("MineActivity"))
-                    startAty(MineActivity.class);
+                if (name.contains("MineActivity"))
+                    break;
+                startAty(MineActivity.class);
                 if (!name.contains("MainActivity"))
                     finish();
                 break;

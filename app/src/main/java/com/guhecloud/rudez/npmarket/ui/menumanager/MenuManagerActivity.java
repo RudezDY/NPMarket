@@ -52,7 +52,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
 
     @Override
     protected void injectObject() {
-        getActivityComponent().Inject(this);
+        getActivityComponent().inject(this);
     }
 
     @Override

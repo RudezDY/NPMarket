@@ -1,7 +1,6 @@
 package com.guhecloud.rudez.npmarket.ui.scan;
 
 import android.graphics.PointF;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -28,7 +27,7 @@ public class ScanActivity extends RxActivity<ScanPresenter> implements ScanContr
 
     @Override
     protected void injectObject() {
-        getActivityComponent().Inject(this);
+        getActivityComponent().inject(this);
     }
 
     @Override
