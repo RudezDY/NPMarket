@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NPMarket.iml" filepath="$PROJECT_DIR$/NPMarket.iml" />
+      <module fileurl="file://F:\download\gp_dh\NPMarket.iml" filepath="F:\download\gp_dh\NPMarket.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\download\gp_dh\app\app.iml" filepath="F:\download\gp_dh\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gp_dh.iml" filepath="$PROJECT_DIR$/gp_dh.iml" />
     </modules>
   </component>
 </project>
