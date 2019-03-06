@@ -51,6 +51,7 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
         setToolBar(viewToolbar,"消息中心");
 //        vpTask.setOffscreenPageLimit(title.length);
 
+
         tab_message.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
