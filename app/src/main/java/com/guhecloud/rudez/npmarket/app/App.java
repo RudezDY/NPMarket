@@ -29,7 +29,6 @@ import javax.inject.Inject;
  */
 public class App extends MultiDexApplication {
 
-    private String name;
     private static final String TAG = "App";
     public static App instance;
     public static Stack<WeakReference<Activity>> activityStack = new Stack<>();
