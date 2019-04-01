@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
-
 
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.app.App;
@@ -31,13 +31,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setContentView(getLayoutId());
+
         thisActivity = this;
+//        ViewGroup rootView = (ViewGroup) thisActivity.getWindow().getDecorView().findViewById(android.R.id.content);
+//        rootView.setPadding(0, App.STATUSBARHEIGHT, 0, 0);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            //5.0 以上直接设置状态栏颜色
+//            thisActivity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        }
         activityWeakReference = new WeakReference<Activity>(this);
         mUnBinder = ButterKnife.bind(this);
         App.getInstance().addActivity(activityWeakReference);
         initEventAndData(savedInstanceState);
     }
+
 
 
 

@@ -5,6 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="cover_bg">#66CCCCCC</color>
     <color name="white">#ffffff</color>
-    <color name="gray">#dddddd</color>
+    <color name="gray">#d5d5d5</color>
     <color name="colorToast">#ffffff</color>
+    <color name="orange_num_bg">#FF3115</color>
+    <color name="orange">#FF6715</color>
+    <color name="orange_shallow">#FF9F15</color>
+    <color name="blue_text">#3790FF</color>
+    <color name="blue_bg">#7AB5FF</color>
 </resources>

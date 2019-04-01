@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 
 public class ResultMessage<T> {
 	
-	public static final int SUCCESS = 1000;
+	public static final int SUCCESS = 200;
 	public static final int FAIL = 2000;
 	public static final int AUTH_FAIL = 3000;
 

@@ -9,6 +9,7 @@
     tools:context="com.guhecloud.rudez.npmarket.ui.main.MainActivity">
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -61,8 +62,11 @@
                 app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
                 app:banner_pointTopBottomMargin="15dp"
                 app:banner_transitionEffect="alpha" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1200dp"
+                android:text="sddss"/>
         </LinearLayout>
-
     </ScrollView>
 <include layout="@layout/layout_tab"
     />

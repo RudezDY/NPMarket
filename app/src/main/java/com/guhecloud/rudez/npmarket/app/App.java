@@ -3,7 +3,6 @@ package com.guhecloud.rudez.npmarket.app;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.os.UserManager;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
@@ -11,17 +10,16 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-
 import com.guhecloud.rudez.npmarket.di.component.AppComponent;
 import com.guhecloud.rudez.npmarket.di.component.DaggerAppComponent;
 import com.guhecloud.rudez.npmarket.di.module.AppModule;
 import com.guhecloud.rudez.npmarket.di.module.HttpModule;
 
 import java.lang.ref.WeakReference;
-import java.util.Locale;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Stack;
-
-import javax.inject.Inject;
 
 
 /**
@@ -39,6 +37,7 @@ public class App extends MultiDexApplication {
     public static int WIDTHPIXELS;
     public static float DENSITY;
     public static int DENSITYDPI;
+    public static int STATUSBARHEIGHT;
     private static AppComponent appComponent;
 
 
@@ -60,6 +59,7 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        closeAndroidPDialog();
         instance = this;
         //测量屏幕尺寸
         getScreenSize();
@@ -123,6 +123,46 @@ public class App extends MultiDexApplication {
         WIDTHPIXELS = outMetrics.widthPixels;
         DENSITY = outMetrics.density;
         DENSITYDPI = outMetrics.densityDpi;
+
+        getStatusBarHeight();
+    }
+
+    /**
+     * 获取状态栏高度
+     * @return
+     */
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        STATUSBARHEIGHT = result;
+        return result;
+    }
+
+    /**
+     * 去掉miui10之后的反射使用警告
+     */
+    private void closeAndroidPDialog(){
+        try {
+            Class aClass = Class.forName("android.content.pm.PackageParser$Package");
+            Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
+            declaredConstructor.setAccessible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Class cls = Class.forName("android.app.ActivityThread");
+            Method declaredMethod = cls.getDeclaredMethod("currentActivityThread");
+            declaredMethod.setAccessible(true);
+            Object activityThread = declaredMethod.invoke(null);
+            Field mHiddenApiWarningShown = cls.getDeclaredField("mHiddenApiWarningShown");
+            mHiddenApiWarningShown.setAccessible(true);
+            mHiddenApiWarningShown.setBoolean(activityThread, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

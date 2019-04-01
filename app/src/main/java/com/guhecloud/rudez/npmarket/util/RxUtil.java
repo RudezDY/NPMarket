@@ -67,13 +67,13 @@ public class RxUtil {
                 return upstream.flatMap(new Function<ResultMessage, Flowable<ResultMessage>>() {
                     @Override
                     public Flowable<ResultMessage> apply(@NonNull ResultMessage tResultMessage) throws Exception {
-                        if (ResultMessage.SUCCESS == tResultMessage.getResultCode()) {
+//                        if (ResultMessage.SUCCESS == tResultMessage.getResultCode()) {
                             return createData(tResultMessage);
-                        } else if (ResultMessage.AUTH_FAIL == tResultMessage.getResultCode()) {
-                            return Flowable.error(new AuthException(tResultMessage.getResultMsg()));
-                        } else {
-                            return Flowable.error(new ApiException(tResultMessage.getResultMsg()));
-                        }
+//                        } else if (ResultMessage.AUTH_FAIL == tResultMessage.getResultCode()) {
+//                            return Flowable.error(new AuthException(tResultMessage.getResultMsg()));
+//                        } else {
+//                            return Flowable.error(new ApiException(tResultMessage.getResultMsg()));
+//                        }
                     }
                 });
             }
