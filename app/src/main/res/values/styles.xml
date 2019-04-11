@@ -33,13 +33,14 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/black</item>
     </style>
     <style name="AppBarStyle" parent="Widget.Design.AppBarLayout"></style>>
     <style name="ToolBarStyle" parent="Widget.AppCompat.Toolbar">
-        <item name="titleTextColor">@android:color/white</item>
-        <item name="android:background">?attr/colorPrimaryDark</item>
-        <item name="elevation">4dp</item>
+        <item name="titleTextColor">@color/black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:background">@color/white</item>
+        <item name="elevation">1dp</item>
     </style>
 
 
@@ -118,6 +119,12 @@
 
     <style name="msgTabTextStyle">
         <item name="android:textSize">@dimen/msgTab_size</item>
+    </style>
+
+    <style name="view_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.2dp</item>
+        <item name="android:background">@color/gray</item>
     </style>
 
 </resources>

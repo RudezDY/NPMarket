@@ -1,7 +1,7 @@
 package com.guhecloud.rudez.npmarket.mvp.model;
 
 import com.guhecloud.rudez.npmarket.util.LetterComparator;
-import com.nanchen.wavesidebar.FirstLetterUtil;
+import com.guhecloud.rudez.npmarket.widgit.wavesidebar.FirstLetterUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +35,13 @@ public class ContactModel {
     public static List<ContactModel> getContacts() {
         List<ContactModel> contacts = new ArrayList<>();
 
+        contacts.add(new ContactModel("_班Bghg"));
+        contacts.add(new ContactModel("_班Aghg"));
+        contacts.add(new ContactModel("_班Dghg"));
+        contacts.add(new ContactModel("_收藏An"));
+        contacts.add(new ContactModel("_收藏SDD"));
+        contacts.add(new ContactModel("_收藏DS"));
+        contacts.add(new ContactModel("_收藏da"));
         contacts.add(new ContactModel("Andy"));
         contacts.add(new ContactModel("阿姨"));
         contacts.add(new ContactModel("爸爸"));

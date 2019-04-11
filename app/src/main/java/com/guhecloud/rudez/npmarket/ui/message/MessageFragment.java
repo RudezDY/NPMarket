@@ -45,14 +45,6 @@ public class MessageFragment extends RxFragment<MsgFragmentPresenter> implements
             title = getArguments().getString(TITLE);
         }
     }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()&& isInitView&& !isInitData) {
-//            loadNewData();
-            ToastUtil.show(title);
-        }
-    }
 
     @Override
     protected void injectObject() {
@@ -67,6 +59,11 @@ public class MessageFragment extends RxFragment<MsgFragmentPresenter> implements
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    protected void onLazyLoad() {
+        ToastUtil.show(title);
     }
 
     @Override

@@ -20,6 +20,7 @@ import com.guhecloud.rudez.npmarket.mvp.contract.MenuManagerContract;
 import com.guhecloud.rudez.npmarket.mvp.model.AppletModel;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MenuManagerPresenter;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
+import com.guhecloud.rudez.npmarket.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,9 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
     MyAppletAdapter myAppletAdapter;
     MoreAppletAdapter moreAppletAdapter;
 
-    final String MANAGE = "管理";
-    final String COMPLETE = "完成";
+    View footer;
+    final String MANAGE = "编辑";
+    final String COMPLETE = "保存";
 
     @Override
     protected void injectObject() {
@@ -62,7 +64,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        setToolBar(view_toolbar,"应用管理");
+        setToolBar(view_toolbar,"应用中心");
         tv_toolbarRight.setVisibility(View.VISIBLE);
         tv_toolbarRight.setText(MANAGE);
 
@@ -92,6 +94,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         tv_toolbarRight.setText(COMPLETE);
         myAppletAdapter.setEdit();
         moreAppletAdapter.setEdit();
+        footer.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -101,6 +104,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         tv_toolbarRight.setText(MANAGE);
         myAppletAdapter.setEditEnd();
         moreAppletAdapter.setEditEnd();
+        footer.setVisibility(View.VISIBLE);
     }
 
     private void initRv() {
@@ -123,12 +127,14 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         rv_moreApps.setAdapter(moreAppletAdapter);
 
         //设置我的应用footer（添加按钮）
-        View footer = LayoutInflater.from(this).inflate(R.layout.footer_add,null);
+
+        footer = LayoutInflater.from(this).inflate(R.layout.footer_add,null);
         myAppletAdapter.addFooterView(footer);
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setEdit();
+
             }
         });
         myAppletAdapter.setFooterViewAsFlow(true);
@@ -172,6 +178,10 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId()==R.id.img_add){
+                    if (myAppletData.size()>=7){
+                        ToastUtil.show("最多添加七个应用噢");
+                        return;
+                    }
                     AppletModel curModel=moreAppletData.remove(position);
                     curModel.setCollect(true);
                     myAppletData.add(curModel);

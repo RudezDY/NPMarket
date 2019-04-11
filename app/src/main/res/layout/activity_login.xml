@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.guhecloud.rudez.npmarket.ui.login.LoginActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="欢迎使用农批市场智慧门户"/>
+
+    <com.guhecloud.rudez.npmarket.widgit.ClearWriteEditText
+        android:id="@+id/et_tel"
+        android:layout_width="288dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/selector_orange_stoke"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_marginTop="64dp"
+        android:inputType="phone"
+        android:hint="输入手机号"
+        android:textSize="16sp"/>
+
+    <com.guhecloud.rudez.npmarket.widgit.ClearWriteEditText
+        android:id="@+id/et_pwd"
+        android:layout_width="288dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/selector_orange_stoke"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:inputType="textPassword"
+        android:layout_marginTop="16dp"
+        android:hint="输入密码"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layout_vertifyCode"
+        android:layout_width="288dp"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/selector_orange_stoke"
+        android:layout_marginTop="16dp">
+        <com.guhecloud.rudez.npmarket.widgit.ClearWriteEditText
+            android:id="@+id/et_vertifyCode"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            android:hint="输入验证码"
+            android:paddingLeft="16dp"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:background="@null"/>
+        <TextView
+            android:id="@+id/tv_getCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:paddingRight="16dp"
+            android:text="获取验证码"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="288dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/selector_orange_solid"
+        android:text="登录"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/layout_useCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp">
+        <TextView
+            android:id="@+id/tv_useCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="使用验证码登录 |"/>
+        <TextView
+            android:id="@+id/tv_resetPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="找回密码"/>
+    </LinearLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_usePwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="使用账号密码登录"
+        android:layout_marginTop="12dp"/>
+
+
+
+</LinearLayout>

@@ -7,18 +7,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context="com.guhecloud.rudez.npmarket.ui.contacts.ContactsActivity">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="8dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center_vertical">
     <!--搜索框-->
-    <com.nanchen.wavesidebar.SearchEditText
+    <com.guhecloud.rudez.npmarket.widgit.wavesidebar.SearchEditText
         android:id="@+id/et_search"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/search_edit_bg"
+        android:background="@drawable/shape_search_bg_gray"
         android:drawableLeft="@mipmap/icon_search"
         android:drawablePadding="5dp"
         android:drawableStart="@mipmap/icon_search"
@@ -29,7 +38,13 @@
         android:padding="5dp"
         android:textSize="16sp"
         app:drawableDel="@mipmap/edit_delete"/>
-
+    <ImageView
+        android:id="@+id/img_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:src="@mipmap/icon_menu"/>
+</LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -43,7 +58,7 @@
             android:layout_height="match_parent"/>
 
         <!--字母导航栏-->
-        <com.nanchen.wavesidebar.WaveSideBarView
+        <com.guhecloud.rudez.npmarket.widgit.wavesidebar.WaveSideBarView
             android:id="@+id/bar_side"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

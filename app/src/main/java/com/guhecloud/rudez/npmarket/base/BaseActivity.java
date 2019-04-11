@@ -60,9 +60,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setToolBar(Toolbar toolbar, String title, boolean back) {
-        toolbar.setTitle("");
+        toolbar.setTitle(title);
         TextView tv_title=findViewById(R.id.tv_title);
-        tv_title.setText(title);
+//        tv_title.setText(title);
         setSupportActionBar(toolbar);
         if (back) {
             if(getSupportActionBar()==null){

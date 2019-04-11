@@ -97,6 +97,14 @@ public class App extends MultiDexApplication {
 
         Log.e(TAG,"removeActivity : "+activityStack.size());
     }
+    public void closeAllAty(){
+        while (!activityStack.empty()) {
+            WeakReference<Activity> activityWeakReference = activityStack.pop();
+            if(activityWeakReference !=null&& activityWeakReference.get()!=null){
+                activityWeakReference.get().finish();
+            }
+        }
+    }
 
     public void exitApp() {
         while (!activityStack.empty()) {

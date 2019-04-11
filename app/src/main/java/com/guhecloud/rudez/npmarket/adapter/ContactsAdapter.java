@@ -39,7 +39,10 @@ public class ContactsAdapter extends BaseQuickAdapter<ContactModel,BaseViewHolde
         Log.e(TAG, "onBindViewHolder: index:" +position);
         if (position == 0 || !data.get(position-1).getIndex().equals(item.getIndex())) {
             tv_index.setVisibility(View.VISIBLE);
-            tv_index.setText(item.getIndex());
+            String text =item.getIndex();
+            if (text.contains("\"") || text.contains("!"))
+                text=text.substring(1);
+            tv_index.setText(text);
         } else {
             tv_index.setVisibility(View.GONE);
         }

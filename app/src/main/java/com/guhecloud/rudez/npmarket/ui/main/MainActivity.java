@@ -2,19 +2,26 @@ package com.guhecloud.rudez.npmarket.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.mvp.contract.MainContract;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MainPresenter;
+import com.guhecloud.rudez.npmarket.ui.menumanager.MenuManagerActivity;
+import com.guhecloud.rudez.npmarket.ui.search.SearchActivity;
 import com.guhecloud.rudez.npmarket.util.GlideApp;
+import com.guhecloud.rudez.npmarket.util.LogUtil;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
-import com.nanchen.wavesidebar.SearchEditText;
+import com.guhecloud.rudez.npmarket.widgit.wavesidebar.SearchEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 public class MainActivity extends HomeBaseActivity<MainPresenter> implements MainContract.View {
@@ -25,6 +32,11 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     SearchEditText et_search;
     @BindView(R.id.banner_guide_content)
     BGABanner banner;
+
+    @BindView(R.id.rv_backlog)
+    RecyclerView rv_backlog;
+    @BindView(R.id.layout_backlog)
+    LinearLayout layout_backlog;
 
     @Override
     protected void injectObject() {
@@ -38,6 +50,32 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+        et_search.setFocusable(false);
+        setBanner();
+    }
+
+    @OnClick({R.id.tv_more,R.id.et_search})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.tv_more:
+                startAty(MenuManagerActivity.class);
+                break;
+            case R.id.et_search:
+                startAty(SearchActivity.class);
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int rv_hitht = layout_backlog.getHeight();
+        LogUtil.i("rv_hight: "+rv_hitht);
+        int layout_hitht = layout_backlog.getHeight();
+        LogUtil.i("layout_hitht: "+layout_hitht);
+    }
+
+    private void setBanner() {
         banner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
@@ -61,7 +99,7 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
          */
         banner.setAutoPlayAble(imgUrls.size()>1);
         banner.setAutoPlayInterval(3000);//间隔时间
-        banner.setAspectRatio(20f/9);//设置宽高比，float类型
+        banner.setAspectRatio(16f/9);//设置宽高比，float类型
         banner.setData(imgUrls,tipsList);
 
         banner.setDelegate(new BGABanner.Delegate<ImageView,String>() {
@@ -75,5 +113,10 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     @Override
     public void showError(String msg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

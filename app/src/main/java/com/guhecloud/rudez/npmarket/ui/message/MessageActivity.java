@@ -63,7 +63,7 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
                 textView.setText(title[tab.getPosition()]);
                 textView.setTextColor(tab_message.getTabTextColors());
                 textView.setTypeface(Typeface.DEFAULT_BOLD);
-                textView.setTextSize(26);
+                textView.setTextSize(18);
             }
 
             @Override
@@ -74,7 +74,7 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
                 }
                 TextView textView = tab.getCustomView().findViewById(R.id.tv_msg_tab);
                 textView.setText(title[tab.getPosition()]);
-                textView.setTextSize(18);
+                textView.setTextSize(16);
                 textView.setTypeface(Typeface.DEFAULT);
             }
 

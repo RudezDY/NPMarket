@@ -88,9 +88,11 @@ public class HttpModule {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 Response response = chain.proceed(request);
+
                 if (SystemUtil.isNetworkConnected()) {
                     int maxAge = 0;
                    response = response.newBuilder().header("Cache-Control", "public,max-age=" + maxAge)
+//                           .addHeader("token", User.getInstance().token)
                             .removeHeader("Pragma")
                             .build();
 
@@ -98,6 +100,7 @@ public class HttpModule {
                     int maxStale = 60 * 60 * 24 * 28;
                    response =  response.newBuilder()
                             .header("Cache-Control", "public,only-if-cached,max-stale=" + maxStale)
+//                           .addHeader("token", User.getInstance().token)
                             .removeHeader("Pragma")
                             .build();
 
@@ -117,6 +120,7 @@ public class HttpModule {
                             .build();
                 }
                 LogUtil.d("interceptor");
+
                 return chain.proceed(request);
             }
         };
@@ -234,6 +238,7 @@ public class HttpModule {
         if(Constants.SIGN){
             addSign(builder);
         }
+
         return builder.build();
     }
 

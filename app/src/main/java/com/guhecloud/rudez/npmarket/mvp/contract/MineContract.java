@@ -12,7 +12,7 @@ public interface MineContract {
 
 
     interface Presenter extends BasePresenter<View> {
-        void login(String username,String psd);
+
     }
 
 }

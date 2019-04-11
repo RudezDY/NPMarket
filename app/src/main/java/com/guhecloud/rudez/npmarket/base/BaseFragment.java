@@ -24,8 +24,7 @@ public abstract class BaseFragment extends Fragment {
     protected WeakReference<Activity> activityWeakReference;
     protected WeakReference<Context> contextWeakReference;
     private Unbinder mUnBinder;
-    protected boolean isInitView = false;
-    protected boolean isInitData = false;
+    protected boolean isFirstLoad = false;//是否第一次加载视图，默认为false，createView之后置为ture;
 
     @Override
     public void onAttach(Context context) {
@@ -60,22 +59,35 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(getLayoutId(), container, false);
         mUnBinder = ButterKnife.bind(this, mView);
+        isFirstLoad = true;//视图创建完成，将变量置为true
+        if (getUserVisibleHint()) {//如果Fragment可见进行数据加载
+            onLazyLoad();
+            isFirstLoad = false;
+        }
         return mView;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isFirstLoad && isVisibleToUser) {//视图变为可见并且是第一次加载
+            onLazyLoad();
+            isFirstLoad = false;
+        }
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initEventAndData(savedInstanceState);
-        isInitView =true;
     }
 
 
 
     @Override
     public void onDestroyView() {
-        isInitView =false;
-        isInitData = false;
+        isFirstLoad =false;
         mUnBinder.unbind();
         mView = null;
         super.onDestroyView();
@@ -89,4 +101,6 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutId();
 
     protected abstract void initEventAndData(Bundle savedInstanceState);
+
+    protected abstract void onLazyLoad();
 }

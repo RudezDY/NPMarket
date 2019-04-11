@@ -3,14 +3,15 @@ package com.guhecloud.rudez.npmarket.util;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.TypedValue;
-
 
 import com.guhecloud.rudez.npmarket.app.App;
 
@@ -118,7 +119,10 @@ public class SystemUtil {
         return null;
     }
 
-
+    /**
+     * 获取缓存路径
+     * @return
+     */
     public static String getDiskCacheDir() {
         String cachePath = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
@@ -131,6 +135,10 @@ public class SystemUtil {
     }
 
 
+    /**
+     * 获取版本号
+     * @return
+     */
     public static int getVersion() {
         try {
             PackageInfo packageInfo = App.getInstance().getPackageManager().getPackageInfo(App.getInstance().getPackageName(), 0);
@@ -141,6 +149,20 @@ public class SystemUtil {
         return 0;
     }
 
+    /**
+     * 获取版本名
+     * @return
+     */
+    public static String getVersionName() {
+        try {
+            PackageInfo packageInfo = App.getInstance().getPackageManager().getPackageInfo(App.getInstance().getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (Exception e) {
+
+        }
+        return "";
+    }
+
 
     public static int getActionBarSize(@NonNull Context context) {
         TypedValue value = new TypedValue();
@@ -149,4 +171,11 @@ public class SystemUtil {
                 value.data, context.getResources().getDisplayMetrics());
         return actionBarSize;
     }
+
+    public static void callPhone(Context context,String phoneNom){
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNom));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
 }

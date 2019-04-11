@@ -14,15 +14,17 @@ import com.guhecloud.rudez.npmarket.mvp.contract.ContactsContract;
 import com.guhecloud.rudez.npmarket.mvp.model.ContactModel;
 import com.guhecloud.rudez.npmarket.mvp.presenter.ContactsPresenter;
 import com.guhecloud.rudez.npmarket.ui.main.HomeBaseActivity;
+import com.guhecloud.rudez.npmarket.util.LogUtil;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
-import com.nanchen.wavesidebar.SearchEditText;
-import com.nanchen.wavesidebar.Trans2PinYinUtil;
-import com.nanchen.wavesidebar.WaveSideBarView;
+import com.guhecloud.rudez.npmarket.widgit.wavesidebar.SearchEditText;
+import com.guhecloud.rudez.npmarket.widgit.wavesidebar.Trans2PinYinUtil;
+import com.guhecloud.rudez.npmarket.widgit.wavesidebar.WaveSideBarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implements ContactsContract.View {
 
@@ -54,6 +56,15 @@ public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implem
         setSide_Search();
 
 
+    }
+
+    @OnClick({R.id.img_menu})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.img_menu:
+                startAty(DepartmentListActivity.class);
+                break;
+        }
     }
 
     private void setSide_Search() {
@@ -119,6 +130,33 @@ public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implem
                 ToastUtil.shortShow(showData.get(position).getName());
             }
         });
+        //监听rv的滑动，获取界面第一个显示的item
+        rv_contacts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            //滚动停止才进入
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+
+            //滚动过程就算
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //获取界面第一个显示的item
+                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();//获取LayoutManager
+                int topPOsition=((LinearLayoutManager)manager).findFirstVisibleItemPosition();
+                LogUtil.i("topPosition:"+topPOsition);
+                if (topPOsition < 0){
+                    return;
+                }
+                String po=showData.get(topPOsition).getIndex();
+                //设置侧边菜单栏选中位置
+                bar_side.setCurPosition(po);
+            }
+        });
+
     }
 
 
