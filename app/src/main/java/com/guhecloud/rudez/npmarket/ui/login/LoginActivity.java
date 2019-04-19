@@ -2,13 +2,17 @@ package com.guhecloud.rudez.npmarket.ui.login;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.LoginContract;
+import com.guhecloud.rudez.npmarket.mvp.model.User;
 import com.guhecloud.rudez.npmarket.mvp.presenter.LoginPresenter;
 import com.guhecloud.rudez.npmarket.ui.main.MainActivity;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
@@ -37,6 +41,8 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
     TextView tv_resetPwd;
     @BindView(R.id.tv_usePwd)
     TextView tv_usePwd;
+    @BindView(R.id.btn_login)
+    CheckedTextView btn_login;
 
     boolean isCanGetCode = true;//是否处于能获取验证码状态
     CountDownTimer countDownTimer;//计时器
@@ -60,11 +66,32 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
                 isCanGetCode = true;
             }
         };
-    }
 
+        //监听密码输入框超过8个字登录按钮变色
+        et_pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>=8){
+                    btn_login.setChecked(true);
+                }else {
+                    btn_login.setChecked(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
     @OnClick({R.id.tv_getCode,R.id.tv_useCode,R.id.tv_usePwd,R.id.btn_login,R.id.tv_resetPwd})
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.tv_usePwd://用密码登录
                 setUsePwdLogin();
                 break;
@@ -73,7 +100,7 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
                 break;
             case R.id.tv_getCode://获取验证码
                 LogUtil.i("getCode");
-                if (isCanGetCode){
+                if (isCanGetCode) {
                     LogUtil.i("CanGetCode");
                     countDownTimer.start();
                     isCanGetCode = false;
@@ -84,12 +111,20 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
                 startAty(ResetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-                mPresenter.login("faircheng","111");
-//            mPresenter.tokenLogin();
-                startAty(MainActivity.class);
+
+                mPresenter.login("faircheng", "111");
+
                 break;
         }
     }
+
+    @Override
+    public void onLoginSuccess(User user) {
+        User.getInstance().setUser(user);
+        startAty(MainActivity.class);
+        activityWeakReference.get().finish();
+    }
+
 
     private void setUseCodeLogin() {
         layout_vertifyCode.setVisibility(View.VISIBLE);
@@ -120,4 +155,6 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
     public void showError(String msg) {
 
     }
+
+
 }

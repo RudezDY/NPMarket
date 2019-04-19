@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.app.App;
+import com.guhecloud.rudez.npmarket.util.loading.Gloading;
 
 import java.lang.ref.WeakReference;
 
@@ -104,4 +105,52 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onLowMemory() {
         super.onLowMemory();
     }
+
+
+    /**
+     * loading相关
+     */
+    protected Gloading.Holder mHolder;
+
+    /**
+     * make a Gloading.Holder wrap with current activity by default
+     * override this method in subclass to do special initialization
+     */
+    protected void initLoadingStatusViewIfNeed() {
+        if (mHolder == null) {
+            //bind status view to activity root view by default
+            mHolder = Gloading.getDefault().wrap(this).withRetry(new Runnable() {
+                @Override
+                public void run() {
+                    onLoadRetry();
+                }
+            });
+        }
+    }
+
+    protected void onLoadRetry() {
+        // override this method in subclass to do retry task
+    }
+
+    public void showLoading() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoading();
+    }
+
+    public void showLoadSuccess() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadSuccess();
+    }
+
+    public void showLoadFailed() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showLoadFailed();
+    }
+
+    public void showEmpty() {
+        initLoadingStatusViewIfNeed();
+        mHolder.showEmpty();
+    }
+
+
 }

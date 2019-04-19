@@ -76,4 +76,8 @@ dependencies {
     compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
     compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
     implementation 'com.yanzhenjie:album:2.0.1'
+    //rv的流式manager
+    compile 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.5'
+    compile 'org.xutils:xutils:3.5.1'
+    compile 'com.alibaba:fastjson:1.2.33'
 }

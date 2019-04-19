@@ -2,6 +2,7 @@ package com.guhecloud.rudez.npmarket.commonmodel.http.api;
 
 
 import com.guhecloud.rudez.npmarket.commonmodel.http.response.ResultMessage;
+import com.guhecloud.rudez.npmarket.mvp.model.User;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Field;
@@ -15,23 +16,28 @@ import retrofit2.http.POST;
  */
 public interface NoCacheHttpApis {
 
-//     String HOST = "http://192.168.10.123:8080/jwxzs/data/";
 
-//     String HOST =  "http://yapi.demo.qunar.com/mock/58008/";
-     String token="1MsREf4oMTznc7JJwdN5PC3cDSULGdd6s6rJru2++qGvhhXa/5Too9viCFQiyeV9vgGIdR6UYFO8DlQqT/N1fRzR20bCx9FcEMNzsrRsboGJWcBNYJPWR4AFaJ7RGcgS8U2cRhUQS1WI9nsPT/XcYjNbcdQQsy+NMIdScldijp8=";
-
-     String HOST =  "http://39.97.164.154:8182/";
+     String HOST =  "http://132.232.11.106:8182/";
 
 
      //登录
      @FormUrlEncoded
      @POST("userLogin")
-     Flowable<ResultMessage> login(@Field("userName") String name, @Field("password") String password);
+     Flowable<ResultMessage<User>> login(@Field("userName") String name, @Field("password") String password);
 
      //登录
 
      @GET("login")
      Flowable<ResultMessage> tokenLogin(@Header("token") String token);
+
+     //联系人
+     @FormUrlEncoded
+     @POST("address/book")
+     Flowable<ResultMessage> getConstants(@Header("token") String token,@Field("queryDTO")String queryDTO);
+
+     //联系人部门
+     @GET("address/dept")
+     Flowable<ResultMessage> getDept(@Header("token") String token);
 
 //     //测试
 //     @FormUrlEncoded

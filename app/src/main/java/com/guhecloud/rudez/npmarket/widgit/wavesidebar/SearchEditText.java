@@ -91,6 +91,7 @@ public class SearchEditText extends AppCompatEditText implements View.OnFocusCha
             if (length() < 1) {
                 drawableDel = null;
             }
+
             this.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, null, drawableDel, null);
             super.onDraw(canvas);
         } else { // 如果不是默认样式，需要将图标绘制在中间

@@ -55,6 +55,10 @@ public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implem
         initRv();
         setSide_Search();
 
+//        QueryDTO queryDTO=new QueryDTO("","");
+//        String json = new Gson().toJson(queryDTO);
+        mPresenter.getContacts("","");
+
 
     }
 
@@ -62,6 +66,7 @@ public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implem
     public void onClick(View v){
         switch (v.getId()){
             case R.id.img_menu:
+                mPresenter.getDept();
                 startAty(DepartmentListActivity.class);
                 break;
         }
@@ -164,4 +169,18 @@ public class ContactsActivity extends HomeBaseActivity<ContactsPresenter> implem
     public void showError(String msg) {
 
     }
+
+
+
+
+    class QueryDTO{
+        String deptId;
+        String keyWord;
+
+        public QueryDTO(String deptId, String keyWord) {
+            this.deptId = deptId;
+            this.keyWord = keyWord;
+        }
+    }
+
 }

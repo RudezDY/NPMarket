@@ -9,7 +9,7 @@ import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.ScanContract;
 import com.guhecloud.rudez.npmarket.mvp.presenter.ScanPresenter;
-import com.guhecloud.rudez.npmarket.util.ToastUtil;
+import com.guhecloud.rudez.npmarket.util.SnackbarUtil;
 
 import butterknife.BindView;
 
@@ -19,11 +19,6 @@ public class ScanActivity extends RxActivity<ScanPresenter> implements ScanContr
     QRCodeReaderView qrCodeReaderView;
     @BindView(R.id.view_toolbar)
     Toolbar viewToolbar;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
-    }
 
     @Override
     protected void injectObject() {
@@ -49,7 +44,7 @@ public class ScanActivity extends RxActivity<ScanPresenter> implements ScanContr
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        setToolBar(viewToolbar, "二维码扫描");
+        setToolBar(viewToolbar, "二维码扫描",true);
         qrCodeReaderView.setOnQRCodeReadListener(this);
 
         // Use this function to enable/disable decoding
@@ -75,6 +70,7 @@ public class ScanActivity extends RxActivity<ScanPresenter> implements ScanContr
 
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
-        ToastUtil.show(text);
+//        ToastUtil.show(text);
+        SnackbarUtil.showDefault(this,text);
     }
 }

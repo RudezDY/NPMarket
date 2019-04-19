@@ -47,12 +47,12 @@ public class RxUtil {
                 return upstream.flatMap(new Function<ResultMessage<T>, Flowable<T>>() {
                     @Override
                     public Flowable<T> apply(@NonNull ResultMessage<T> tResultMessage) throws Exception {
-                        if (ResultMessage.SUCCESS == tResultMessage.getResultCode()) {
+                        if (ResultMessage.SUCCESS == tResultMessage.getCode()) {
                             return createData(tResultMessage.getData());
-                        } else if (ResultMessage.AUTH_FAIL == tResultMessage.getResultCode()) {
-                            return Flowable.error(new AuthException(tResultMessage.getResultMsg()));
+                        } else if (ResultMessage.AUTH_FAIL == tResultMessage.getCode()) {
+                            return Flowable.error(new AuthException(tResultMessage.getMsg()));
                         } else {
-                            return Flowable.error(new ApiException(tResultMessage.getResultMsg()));
+                            return Flowable.error(new ApiException(tResultMessage.getMsg()));
                         }
                     }
                 });
@@ -67,12 +67,12 @@ public class RxUtil {
                 return upstream.flatMap(new Function<ResultMessage, Flowable<ResultMessage>>() {
                     @Override
                     public Flowable<ResultMessage> apply(@NonNull ResultMessage tResultMessage) throws Exception {
-//                        if (ResultMessage.SUCCESS == tResultMessage.getResultCode()) {
+//                        if (ResultMessage.SUCCESS == tResultMessage.getCode()) {
                             return createData(tResultMessage);
-//                        } else if (ResultMessage.AUTH_FAIL == tResultMessage.getResultCode()) {
-//                            return Flowable.error(new AuthException(tResultMessage.getResultMsg()));
+//                        } else if (ResultMessage.AUTH_FAIL == tResultMessage.getCode()) {
+//                            return Flowable.error(new AuthException(tResultMessage.getMsg()));
 //                        } else {
-//                            return Flowable.error(new ApiException(tResultMessage.getResultMsg()));
+//                            return Flowable.error(new ApiException(tResultMessage.getMsg()));
 //                        }
                     }
                 });

@@ -1,5 +1,6 @@
 package com.guhecloud.rudez.npmarket.util;
 
+import android.app.ActivityManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -176,6 +177,20 @@ public class SystemUtil {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNom));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+
+    /**
+     * 获取当前activity名称
+     * @param context
+     * @return
+     */
+    public static String getRunningActivityName(Context context) {
+        ActivityManager activityManager=(ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        //完整类名
+        String runningActivity=activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
+        String contextActivity = runningActivity.substring(runningActivity.lastIndexOf(".")+1);
+        return contextActivity;
     }
 
 }

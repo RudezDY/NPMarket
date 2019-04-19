@@ -1,5 +1,6 @@
 package com.guhecloud.rudez.npmarket.ui.main;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,13 @@ import android.widget.LinearLayout;
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.mvp.contract.MainContract;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MainPresenter;
-import com.guhecloud.rudez.npmarket.ui.menumanager.MenuManagerActivity;
+import com.guhecloud.rudez.npmarket.ui.scan.ScanActivity;
+import com.guhecloud.rudez.npmarket.ui.search.CarDetailsActivity;
 import com.guhecloud.rudez.npmarket.ui.search.SearchActivity;
 import com.guhecloud.rudez.npmarket.util.GlideApp;
-import com.guhecloud.rudez.npmarket.util.LogUtil;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
 import com.guhecloud.rudez.npmarket.widgit.wavesidebar.SearchEditText;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends HomeBaseActivity<MainPresenter> implements MainContract.View {
 
@@ -54,14 +57,26 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
         setBanner();
     }
 
-    @OnClick({R.id.tv_more,R.id.et_search})
+    @OnClick({R.id.tv_more,R.id.et_search,R.id.img_scan})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.tv_more:
-                startAty(MenuManagerActivity.class);
+//                startAty(MenuManagerActivity.class);
+//                startAty(MerchantDetailsActivity.class);
+                startAty(CarDetailsActivity.class);
                 break;
             case R.id.et_search:
                 startAty(SearchActivity.class);
+                break;
+            case R.id.img_scan:
+                new RxPermissions(thisActivity).request(Manifest.permission.CAMERA)
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if (aBoolean)
+                                    startAty(ScanActivity.class);
+                            }
+                        });
                 break;
         }
     }
@@ -69,10 +84,6 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     @Override
     protected void onResume() {
         super.onResume();
-        int rv_hitht = layout_backlog.getHeight();
-        LogUtil.i("rv_hight: "+rv_hitht);
-        int layout_hitht = layout_backlog.getHeight();
-        LogUtil.i("layout_hitht: "+layout_hitht);
     }
 
     private void setBanner() {

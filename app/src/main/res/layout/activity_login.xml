@@ -7,19 +7,19 @@
     android:orientation="vertical"
     tools:context="com.guhecloud.rudez.npmarket.ui.login.LoginActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="登录"
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_launcher"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="24dp"/>
+        android:layout_marginTop="86dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:text="欢迎使用农批市场智慧门户"/>
 
@@ -76,17 +76,21 @@
             android:text="获取验证码"/>
     </LinearLayout>
 
-    <Button
+    <CheckedTextView
         android:id="@+id/btn_login"
         android:layout_width="288dp"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textAlignment="center"
         android:layout_marginTop="36dp"
+        android:textColor="@color/white"
         android:background="@drawable/selector_orange_solid"
         android:text="登录"
         android:textSize="20sp"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/layout_useCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

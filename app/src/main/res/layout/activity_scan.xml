@@ -13,7 +13,7 @@
         android:layout_height="match_parent" />
 
 
-    <com.kxbyyk.chanin.jwxzs.widget.QRCoverView
+    <com.guhecloud.rudez.npmarket.widgit.QRCoverView
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

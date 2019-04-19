@@ -31,7 +31,7 @@ public class LoadingDialogUtil {
      * @param context
      * @return
      */
-    public static Dialog createLoadingDialog(Context context) {
+    public static Dialog createLoadingDialog(Context context,boolean isCanBack) {
         View view = LayoutInflater.from(context).inflate(
                 R.layout.dialog_loading, null);
         loadingDialog = new Dialog(context,
@@ -39,16 +39,26 @@ public class LoadingDialogUtil {
         loadingDialog.setContentView(view, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-        loadingDialog.setCancelable(false);// 不可以用“返回键”取消
+        loadingDialog.setCancelable(isCanBack);// 不可以用“返回键”取消
         return loadingDialog;
     }
-    public static Dialog createLoadingDialog(Context context,View view) {
+    public static Dialog createLoadingDialog(Context context,View view,boolean isCanBack) {
         loadingDialog = new Dialog(context,
                 R.style.custom_dialog);// 创建自定义样式
         loadingDialog.setContentView(view, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-        loadingDialog.setCancelable(false);// 不可以用“返回键”取消
+        loadingDialog.setCancelable(isCanBack);// 不可以用“返回键”取消
+        return loadingDialog;
+    }
+    public static Dialog createLoadingDialog(Context context,int viewId,boolean isCanBack) {
+        loadingDialog = new Dialog(context,
+                R.style.custom_dialog);// 创建自定义样式
+        View view = LayoutInflater.from(context).inflate(viewId,null);
+        loadingDialog.setContentView(view, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        loadingDialog.setCancelable(isCanBack);// 不可以用“返回键”取消
         return loadingDialog;
     }
 

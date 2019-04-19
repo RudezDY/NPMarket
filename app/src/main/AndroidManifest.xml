@@ -60,7 +60,10 @@
             android:name=".ui.mine.FeedbackActivity"
             android:windowSoftInputMode="stateUnspecified|adjustPan" />
         <activity android:name=".ui.contacts.DepartmentListActivity" />
-        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.search.GoodsDetailsActivity" />
+        <activity android:name=".ui.search.MerchantDetailsActivity" />
+        <activity android:name=".ui.search.CarDetailsActivity" />
     </application>
 
 </manifest>
