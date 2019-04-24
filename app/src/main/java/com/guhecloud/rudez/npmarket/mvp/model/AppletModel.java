@@ -9,45 +9,16 @@ import java.util.List;
  */
 
 public class AppletModel {
-    private String appName;
-    private String url;
-    private String icon;
+    public int id;
+    public String menuName;
+    public String menuCode;
+    public String priority;
+    public String url;
+    public String menuLogo;
+
     private boolean isCollect;
-
     public AppletModel(String appName) {
-        this.appName = appName;
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public boolean isCollect() {
-        return isCollect;
-    }
-
-    public void setCollect(boolean collect) {
-        isCollect = collect;
+        this.menuName = appName;
     }
 
     public static List<AppletModel> getImitateData(){
@@ -64,5 +35,13 @@ public class AppletModel {
         data.add(new AppletModel("满意度调查"));
         data.add(new AppletModel("客服热线"));
         return data;
+    }
+
+    public boolean isCollect() {
+        return isCollect;
+    }
+
+    public void setCollect(boolean collect) {
+        isCollect = collect;
     }
 }

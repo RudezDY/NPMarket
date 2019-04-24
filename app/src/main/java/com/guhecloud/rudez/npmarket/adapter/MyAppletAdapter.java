@@ -18,20 +18,13 @@ import java.util.List;
 
 public class MyAppletAdapter extends BaseItemDraggableAdapter<AppletModel,BaseViewHolder> {
     Context context;
-    List<AppletModel> data;
     boolean isEdit;
-
-    public MyAppletAdapter(List<AppletModel> data,Context context) {
-        super(data);
-        this.context=context;
-        this.data=data;
-    }
 
     public MyAppletAdapter(int layoutResId, List<AppletModel> data,Context context) {
         super(layoutResId, data);
         this.context=context;
-        this.data=data;
     }
+
 
     @Override
     protected void convert(BaseViewHolder helper, AppletModel item) {
@@ -45,7 +38,7 @@ public class MyAppletAdapter extends BaseItemDraggableAdapter<AppletModel,BaseVi
             img_delete.setVisibility(View.GONE);
         }
         helper.addOnClickListener(R.id.img_delete);
-        tv_name.setText(item.getAppName());
+        tv_name.setText(item.menuName);
     }
 
     public void setEdit(){

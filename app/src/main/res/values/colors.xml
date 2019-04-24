@@ -16,6 +16,7 @@
     <color name="colorToast">#ffffff</color>
     <color name="orange_num_bg">#FF3115</color>
     <color name="orange">#FF6715</color>
+    <color name="orange_t">#88FF6715</color>
     <color name="orange_trans">#ffa473</color>
     <color name="orange_shallow">#FF9F15</color>
     <color name="blue_text">#3790FF</color>

@@ -31,7 +31,6 @@ public class MoreAppletAdapter extends BaseQuickAdapter<AppletModel,BaseViewHold
     public MoreAppletAdapter(int layoutResId,Context context) {
         super(layoutResId);
         this.context=context;
-        this.data=data;
     }
 
     @Override
@@ -45,7 +44,7 @@ public class MoreAppletAdapter extends BaseQuickAdapter<AppletModel,BaseViewHold
             img_add.setVisibility(View.GONE);
         }
         helper.addOnClickListener(R.id.img_add);
-        tv_name.setText(item.getAppName());
+        tv_name.setText(item.menuName);
     }
 
     public void setEdit(){

@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.guhecloud.rudez.npmarket.adapter.MyAppletAdapter;
 import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.MenuManagerContract;
 import com.guhecloud.rudez.npmarket.mvp.model.AppletModel;
+import com.guhecloud.rudez.npmarket.mvp.model.AppletObj;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MenuManagerPresenter;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
@@ -52,6 +54,8 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
     final String MANAGE = "编辑";
     final String COMPLETE = "保存";
 
+    List<Integer> saveList;
+
     @Override
     protected void injectObject() {
         getActivityComponent().inject(this);
@@ -67,12 +71,15 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
         setToolBar(view_toolbar,"应用中心");
         tv_toolbarRight.setVisibility(View.VISIBLE);
         tv_toolbarRight.setText(MANAGE);
+        saveList=new ArrayList<>();
 
         initRv();
 
         setRvClick();
 
         setDrag();
+
+        mPresenter.getAppletInfo();
     }
 
     @OnClick({R.id.tv_toolbarRight})
@@ -83,6 +90,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
                     setEdit();
                 }else if (tv_toolbarRight.getText().toString().equals(COMPLETE)){
                     setEditEnd();
+                    mPresenter.saveAppletInfo(saveList);
                 }
         }
     }
@@ -114,13 +122,13 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
             myAppletData=new ArrayList<>();
         if (moreAppletData==null)
             moreAppletData=new ArrayList<>();
-        allAppletData= AppletModel.getImitateData();
-        myAppletData=getMyappdata(allAppletData);
-        moreAppletData=getMoreappdata(allAppletData);
+//        allAppletData= AppletModel.getImitateData();
+//        myAppletData=getMyappdata(allAppletData);
+//        moreAppletData=getMoreappdata(allAppletData);
         rv_myApps.setLayoutManager(new GridLayoutManager(this,4));
         rv_moreApps.setLayoutManager(new GridLayoutManager(this,4));
-        myAppletAdapter=new MyAppletAdapter(R.layout.item_applet_mine,myAppletData,this);
-        moreAppletAdapter=new MoreAppletAdapter(R.layout.item_applet_more,moreAppletData,this);
+        myAppletAdapter=new MyAppletAdapter(R.layout.item_applet_mine,new ArrayList<AppletModel>(),this);
+        moreAppletAdapter=new MoreAppletAdapter(R.layout.item_applet_more,this);
         myAppletAdapter.openLoadAnimation();
         moreAppletAdapter.openLoadAnimation();
         rv_myApps.setAdapter(myAppletAdapter);
@@ -170,6 +178,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
                     moreAppletData.add(curModel);
                     moreAppletAdapter.setNewData(moreAppletData);
                     myAppletAdapter.setNewData(myAppletData);
+                    saveList.remove(position);
                 }
             }
         });
@@ -187,6 +196,7 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
                     myAppletData.add(curModel);
                     myAppletAdapter.setNewData(myAppletData);
                     moreAppletAdapter.setNewData(moreAppletData);
+                    saveList.add(curModel.id);
                 }
             }
         });
@@ -219,9 +229,11 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
                 LogUtil.d("结束位置："+pos);
                 //更新拖拽后的数据及顺序
                 myAppletData=myAppletAdapter.getData();
+                saveList.clear();
                 for (AppletModel model:myAppletData
                      ) {
-                    LogUtil.i(model.getAppName());
+                    Log.i("顺序","name: "+model.menuName+"     id:"+model.id);
+                    saveList.add(model.id);
                 }
             }
         });
@@ -232,34 +244,17 @@ public class MenuManagerActivity extends RxActivity<MenuManagerPresenter> implem
 
     }
 
-    /**
-     * 获取我的应用
-     * @param allAppletData
-     * @return
-     */
-    public List<AppletModel> getMyappdata(List<AppletModel> allAppletData){
-        List<AppletModel> mylist=new ArrayList<>();
-        for (AppletModel model:allAppletData) {
-            if (model.isCollect()){
-                mylist.add(model);
-            }
-        }
-        return mylist;
-    }
 
+    @Override
+    public void onAppletGet(AppletObj appletObj) {
+        myAppletData = appletObj.hasChooseList;
+        moreAppletData = appletObj.noChooseList;
+        myAppletAdapter.setNewData(myAppletData);
+        moreAppletAdapter.setNewData(moreAppletData);
 
-    /**
-     * 获取更多应用
-     * @param allAppletData
-     * @return
-     */
-    public List<AppletModel> getMoreappdata(List<AppletModel> allAppletData){
-        List<AppletModel> morelist=new ArrayList<>();
-        for (AppletModel model:allAppletData) {
-            if (!model.isCollect()){
-                morelist.add(model);
-            }
+        saveList.clear();
+        for (AppletModel model:myAppletData ) {
+            saveList.add(model.id);
         }
-        return morelist;
     }
 }

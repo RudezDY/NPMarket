@@ -3,16 +3,25 @@ package com.guhecloud.rudez.npmarket.ui.main;
 import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.guhecloud.rudez.npmarket.R;
+import com.guhecloud.rudez.npmarket.adapter.HomeAppletAdapter;
+import com.guhecloud.rudez.npmarket.adapter.HomeGTaskAdapter;
 import com.guhecloud.rudez.npmarket.mvp.contract.MainContract;
+import com.guhecloud.rudez.npmarket.mvp.model.HomePageObj;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MainPresenter;
+import com.guhecloud.rudez.npmarket.ui.marketprice.MarketPriceActivity;
+import com.guhecloud.rudez.npmarket.ui.menumanager.MenuManagerActivity;
 import com.guhecloud.rudez.npmarket.ui.scan.ScanActivity;
-import com.guhecloud.rudez.npmarket.ui.search.CarDetailsActivity;
 import com.guhecloud.rudez.npmarket.ui.search.SearchActivity;
 import com.guhecloud.rudez.npmarket.util.GlideApp;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
@@ -38,8 +47,13 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
 
     @BindView(R.id.rv_backlog)
     RecyclerView rv_backlog;
+    @BindView(R.id.rv_apps)
+    RecyclerView rv_apps;
     @BindView(R.id.layout_backlog)
     LinearLayout layout_backlog;
+
+    HomeAppletAdapter appletAdapter;
+    HomeGTaskAdapter gTaskAdapter;
 
     @Override
     protected void injectObject() {
@@ -54,16 +68,53 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
         et_search.setFocusable(false);
+        initRv();
+        mPresenter.getHomePage();
         setBanner();
+    }
+
+    private void initRv() {
+        rv_apps.setLayoutManager(new GridLayoutManager(this,4));
+        rv_backlog.setLayoutManager(new LinearLayoutManager(this));
+        appletAdapter=new HomeAppletAdapter(R.layout.item_applet_mine,this);
+        gTaskAdapter=new HomeGTaskAdapter(R.layout.item_home_gtask,this);
+        rv_apps.setAdapter(appletAdapter);
+        rv_backlog.setAdapter(gTaskAdapter);
+        gTaskAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
+        appletAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (appletAdapter.getItem(position).menuName.equals("市场行情")){
+                    startAty(MarketPriceActivity.class);
+                }
+            }
+        });
+
+        View appletFooter= LayoutInflater.from(this).inflate(R.layout.item_applet_mine,null);
+        ImageView icon = appletFooter.findViewById(R.id.img_icon);
+        TextView tv_name = appletFooter.findViewById(R.id.tv_name);
+        icon.setImageResource(R.mipmap.icon_more);
+        tv_name.setText("全部");
+        appletAdapter.addFooterView(appletFooter);
+        appletAdapter.setFooterViewAsFlow(true);
+        appletFooter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAty(MenuManagerActivity.class);
+            }
+        });
     }
 
     @OnClick({R.id.tv_more,R.id.et_search,R.id.img_scan})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.tv_more:
-//                startAty(MenuManagerActivity.class);
-//                startAty(MerchantDetailsActivity.class);
-                startAty(CarDetailsActivity.class);
+
                 break;
             case R.id.et_search:
                 startAty(SearchActivity.class);
@@ -129,5 +180,16 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    /**
+     * 获取到数据
+     * @param homePageObj
+     */
+    @Override
+    public void onHomePageGet(HomePageObj homePageObj) {
+        appletAdapter.setNewData(homePageObj.applicationList);
+        gTaskAdapter.setNewData(homePageObj.todoList);
     }
 }

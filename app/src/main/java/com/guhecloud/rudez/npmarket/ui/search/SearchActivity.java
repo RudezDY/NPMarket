@@ -1,11 +1,14 @@
 package com.guhecloud.rudez.npmarket.ui.search;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -13,9 +16,15 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.guhecloud.rudez.npmarket.R;
+import com.guhecloud.rudez.npmarket.adapter.SearchCarAdapter;
+import com.guhecloud.rudez.npmarket.adapter.SearchGoodsAdapter;
 import com.guhecloud.rudez.npmarket.adapter.SearchHistoryAdapter;
+import com.guhecloud.rudez.npmarket.adapter.SearchMerchantAdapter;
 import com.guhecloud.rudez.npmarket.base.RxActivity;
 import com.guhecloud.rudez.npmarket.mvp.contract.SearchContract;
+import com.guhecloud.rudez.npmarket.mvp.model.CarListObj;
+import com.guhecloud.rudez.npmarket.mvp.model.GoodsListObj;
+import com.guhecloud.rudez.npmarket.mvp.model.MerchantListObj;
 import com.guhecloud.rudez.npmarket.mvp.presenter.SearchPresenter;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
 import com.guhecloud.rudez.npmarket.widgit.EditText_Clear;
@@ -41,6 +50,8 @@ public class SearchActivity extends RxActivity<SearchPresenter> implements Searc
     RecyclerView rv_history;
     @BindView(R.id.et_search)
     EditText_Clear et_search;
+    @BindView(R.id.tv_searchNum)
+    TextView tv_searchNum;
 
     public final int TYPE_CAR = 111;
     public final int TYPE_GOODS = 222;
@@ -54,6 +65,9 @@ public class SearchActivity extends RxActivity<SearchPresenter> implements Searc
     public int curPage = 1;
     public int pageSize=10;
     SearchHistoryAdapter searchHistoryAdapter;
+    SearchCarAdapter carAdapter;
+    SearchGoodsAdapter goodsAdapter;
+    SearchMerchantAdapter merchantAdapter;
 
     public final int SHOW_HISTORY = 0;
     public final int SHOW_TAB_LIST = 1;
@@ -71,9 +85,52 @@ public class SearchActivity extends RxActivity<SearchPresenter> implements Searc
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
         initTab();
-        initHistory();
         initSearchEdit();
+        initHistory();
+        rv_search.setLayoutManager(new LinearLayoutManager(thisActivity));
+        initAdapter();
 
+    }
+
+    private void initAdapter() {
+        carAdapter = new SearchCarAdapter(R.layout.item_search_car,thisActivity);
+        goodsAdapter = new SearchGoodsAdapter(R.layout.item_search_goods,thisActivity);
+        merchantAdapter = new SearchMerchantAdapter(R.layout.item_search_merchant,thisActivity);
+        BaseQuickAdapter.RequestLoadMoreListener loadMoreListener =new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                if (TextUtils.isEmpty(et_search.getText().toString())){
+                    return;
+                }
+                curPage++;
+                mPresenter.search(searchType,curPage,pageSize,et_search.getText().toString());
+            }
+        };
+        carAdapter.setOnLoadMoreListener(loadMoreListener,rv_search);
+        goodsAdapter.setOnLoadMoreListener(loadMoreListener,rv_search);
+        merchantAdapter.setOnLoadMoreListener(loadMoreListener,rv_search);
+        //默认设置为搜索车辆
+        rv_search.setAdapter(carAdapter);
+
+        carAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                 int carId = carAdapter.getItem(position).id;
+                 mPresenter.getCarDetails(carId);
+            }
+        });
+        goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mPresenter.getGoodsDetails(goodsAdapter.getItem(position).offerId);
+            }
+        });
+        merchantAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mPresenter.getMerchantDetails(merchantAdapter.getItem(position).id);
+            }
+        });
     }
 
     private void initSearchEdit() {
@@ -149,8 +206,23 @@ public class SearchActivity extends RxActivity<SearchPresenter> implements Searc
                     return;
                 }
                 curPage=1;//重置当前页
-                //TODO 重置rv的adapter
                 searchType = searchTypes[tab.getPosition()];//tab变换时设置对应的搜索type
+                //重置rv的adapter
+                switch (searchType){
+                    case TYPE_CAR:
+                        rv_search.setAdapter(carAdapter);
+                        break;
+                    case TYPE_GOODS:
+                        rv_search.setAdapter(goodsAdapter);
+                        break;
+                    case TYPE_MERCHANT:
+                        rv_search.setAdapter(merchantAdapter);
+                        break;
+                }
+
+                carAdapter.setNewData(new ArrayList<CarListObj.CarObj>());
+                goodsAdapter.setNewData(new ArrayList<GoodsListObj.GoodsObj>());
+                merchantAdapter.setNewData(new ArrayList<MerchantListObj.MerchantObj>());
                 mPresenter.search(searchType,curPage,pageSize,et_search.getText().toString());
                 LogUtil.d(searchType+"");
             }
@@ -195,11 +267,13 @@ public class SearchActivity extends RxActivity<SearchPresenter> implements Searc
                 rv_history.setVisibility(View.VISIBLE);
                 tab_search.setVisibility(View.GONE);
                 rv_search.setVisibility(View.GONE);
+                tv_searchNum.setVisibility(View.GONE);
                 break;
             case SHOW_TAB_LIST:
                 rv_history.setVisibility(View.GONE);
                 tab_search.setVisibility(View.VISIBLE);
                 rv_search.setVisibility(View.VISIBLE);
+                tv_searchNum.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -214,6 +288,98 @@ public class SearchActivity extends RxActivity<SearchPresenter> implements Searc
             searchHistoryAdapter.setEmptyView(empty);
         }
         searchHistoryAdapter.setNewData(historyList);
+    }
+
+    //搜索车辆成功
+    @Override
+    public void onCarSuccess(CarListObj carListObj) {
+        List<CarListObj.CarObj> data=carListObj.records;
+//        if (data == null||data.size()==0){
+//            tv_searchNum.setText("没有找到相关结果");
+//            return;
+//        }
+        tv_searchNum.setText("找到"+carListObj.total+"辆车");
+        if (curPage==1){
+            carAdapter.setNewData(data);
+            if (data.size()<pageSize){
+                carAdapter.loadMoreEnd();
+            }
+        }else {
+            carAdapter.addData(data);
+        }
+        if (carListObj.total<=carAdapter.getItemCount()){//没有下一页了
+            carAdapter.loadMoreEnd();
+        }else {
+            carAdapter.loadMoreComplete();//可能还有下一页
+        }
+    }
+
+    //搜索商品成功
+    @Override
+    public void onGoodsSuccess(GoodsListObj goodsListObj) {
+        List<GoodsListObj.GoodsObj> data =goodsListObj.records;
+//        if (data == null||data.size()==0){
+//            tv_searchNum.setText("没有找到相关结果");
+//            return;
+//        }
+        tv_searchNum.setText("找到"+goodsListObj.total+"个商品");
+        if (curPage==1){
+            goodsAdapter.setNewData(data);
+        }else {
+            goodsAdapter.addData(data);
+        }
+        if (goodsListObj.total<=goodsAdapter.getItemCount()){
+            goodsAdapter.loadMoreEnd();
+        }else {
+            goodsAdapter.loadMoreComplete();
+        }
+    }
+
+    //搜索商户成功
+    @Override
+    public void onMerchantSuccess(MerchantListObj merchantListObj) {
+        List<MerchantListObj.MerchantObj> data =merchantListObj.records;
+//        if (data==null||data.size()==0){
+//            tv_searchNum.setText("没有找到相关结果");
+//            return;
+//        }
+        tv_searchNum.setText("找到"+merchantListObj.total+"个商户");
+        if (curPage==1){
+            merchantAdapter.setNewData(data);
+        }else {
+            merchantAdapter.addData(data);
+        }
+        if (merchantListObj.total<=merchantAdapter.getItemCount()){
+            merchantAdapter.loadMoreEnd();
+        }else {
+            merchantAdapter.loadMoreComplete();
+        }
+    }
+
+    //获取车辆详情成功
+    @Override
+    public void onCarDetailSuccess(String carDetailJson) {
+        Intent intent = new Intent(thisActivity,CarDetailsActivity.class);
+        intent.putExtra("carJson",carDetailJson);
+
+        startActivity(intent);
+    }
+
+    //获取商品详情成功
+    @Override
+    public void onGoodsDetailSuccess(String goodsDetailJson) {
+        Intent intent = new Intent(thisActivity,GoodsDetailsActivity.class);
+        intent.putExtra("goodsJson",goodsDetailJson);
+        startActivity(intent);
+    }
+
+    //获取商户详情成功
+    @Override
+    public void onMerchantDetailSuccess(String merchantDetailJson) {
+        Intent intent = new Intent(thisActivity,MerchantDetailsActivity.class);
+
+        intent.putExtra("merchantJson",merchantDetailJson);
+        startActivity(intent);
     }
 
     public void showTipsDialog(){

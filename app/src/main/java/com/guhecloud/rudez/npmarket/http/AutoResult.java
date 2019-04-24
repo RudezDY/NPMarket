@@ -5,7 +5,6 @@ package com.guhecloud.rudez.npmarket.http;
  */
 
 public class AutoResult<T> {
-    public final static int SUCCESS=200;
     public int code;
     public String msg;
     public T data;

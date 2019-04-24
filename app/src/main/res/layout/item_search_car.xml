@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_carNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:textSize="16dp"
+        android:text="川A 23A12"
+        android:textColor="@color/black_222222"/>
+    <TextView
+        android:id="@+id/tv_carType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingBottom="4dp"
+        android:textSize="14dp"
+        android:text="小型汽车"
+        android:textColor="@color/gray_999999"/>
+    <View
+        style="@style/view_line"/>
+
+</LinearLayout>

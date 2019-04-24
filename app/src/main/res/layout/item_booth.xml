@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="12dp"
+    android:orientation="vertical">
+    <View
+        style="@style/view_line"
+        android:layout_marginBottom="12dp"/>
+    <TextView
+        android:id="@+id/tv_boothName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="水产区  D1208"
+        android:textColor="@color/black_222222"/>
+
+    <TextView
+        android:id="@+id/tv_endTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="租约到期时间：2020.08.1"
+        android:textColor="@color/black_222222"/>
+
+
+</LinearLayout>

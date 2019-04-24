@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="4dp"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tv_goodsName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="豌豆"/>
+    <TextView
+        android:id="@+id/tv_price_thisWeek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="3.20"/>
+    <TextView
+        android:id="@+id/tv_price_lastWeek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="2.20"/>
+    <TextView
+        android:id="@+id/tv_change"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="20%"/>
+    <TextView
+        android:id="@+id/tv_price_middle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="2.60"/>
+
+</LinearLayout>

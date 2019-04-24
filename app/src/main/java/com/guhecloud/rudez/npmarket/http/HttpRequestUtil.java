@@ -9,10 +9,8 @@ import com.guhecloud.rudez.npmarket.app.App;
 import com.guhecloud.rudez.npmarket.mvp.model.User;
 import com.guhecloud.rudez.npmarket.util.LoadingDialogUtil;
 import com.guhecloud.rudez.npmarket.util.LogUtil;
-import com.guhecloud.rudez.npmarket.util.SystemUtil;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -49,7 +47,7 @@ public class HttpRequestUtil {
         Log.i("url", url);
         RequestParams params=parserMap(method,url, map);
         if (!TextUtils.isEmpty(User.getInstance().token)){
-            params.addHeader("token",User.getInstance().token);
+            params.addHeader("Authorization",User.getInstance().token);
             Log.d("token",User.getInstance().token);
         }
         params.setConnectTimeout(8000);
@@ -59,8 +57,8 @@ public class HttpRequestUtil {
         else if (method== HttpMethod.GET){
             x.http().get(params,callback);
         }
-        LoadingDialogUtil.createLoadingDialog(App.getInstance().mCurrentActivity.get()
-                ,R.layout.loading_default,true).show();
+        LoadingDialogUtil.createLoadingDialog(App.getInstance().mCurrentActivity.get(),
+                R.layout.loading_default,true).show();
 
     }
 
@@ -104,19 +102,20 @@ public class HttpRequestUtil {
             if (TextUtils.isEmpty(result))
                 return;
             LogUtil.i(result);
-            AutoResult autoResult = new Gson().fromJson(result,AutoResult.class);
-            if (AutoResult.SUCCESS == autoResult.code && null!=autoResult.data)
+            AutoResult<Object> autoResult = new Gson().fromJson(result,AutoResult.class);
+            if (200 == autoResult.code&&null!=autoResult.data){
                 mHttpCallBack.onSuccess(new Gson().toJson(autoResult.data));
-            else
-                mHttpCallBack.onSuccess(autoResult.msg);
-
+            }
+            else {
+                mHttpCallBack.onFailure(autoResult.msg);
+            }
         }
 
         @Override
         public void onError(Throwable ex, boolean isOnCallback) {
             mHttpCallBack.onFailure(ex.toString()+"      isOnCallback:"+isOnCallback);
-            ToastUtil.show("网络请求异常");
-            LogUtil.e(ex.getMessage());
+//            ToastUtil.show("网络请求异常");
+            LogUtil.e("网络请求异常： "+ex.getMessage());
         }
 
         @Override
@@ -155,6 +154,13 @@ public class HttpRequestUtil {
     }
 
 
+    /**
+     * 通过json方式传参
+     * @param method
+     * @param url
+     * @param map
+     * @param mHttpCallBack
+     */
     public static void sendJson(HttpMethod method,
                                 String url,Map<String, Object> map, HttpCallBack mHttpCallBack) {
         HttpRequestUtil.mHttpCallBack=mHttpCallBack;
@@ -163,25 +169,17 @@ public class HttpRequestUtil {
         Log.i("url", url);
         RequestParams params=new RequestParams(url);
         if (!TextUtils.isEmpty(User.getInstance().token)){
-            params.addHeader("token",User.getInstance().token);
+            params.addHeader("Authorization",User.getInstance().token);
             Log.d("token",User.getInstance().token);
         }
         params.setConnectTimeout(8000);
-
-        JSONObject js_request = new JSONObject();//服务器需要传参的json对象
-        try {
-            for (Map.Entry<String,Object> entry : map.entrySet()){
-                js_request.put(entry.getKey(),entry.getValue());
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        JSONObject jb=new JSONObject(map);//服务器需要传参的json对象
         params.setAsJsonContent(true);
-        params.setBodyContent(js_request.toString());
+        Log.i("jsonParames",jb.toString());
+        params.setBodyContent(jb.toString());
         x.http().post(params,callback);
-        String name = SystemUtil.getRunningActivityName(App.getInstance().getApplicationContext());
-        LogUtil.i("我怎么这么好看："+name);
-        LoadingDialogUtil.createLoadingDialog(App.getInstance().mCurrentActivity.get(), R.layout.loading_default,true).show();
+        LoadingDialogUtil.createLoadingDialog(App.getInstance().mCurrentActivity.get(),
+                R.layout.loading_default,true).show();
     }
 
 

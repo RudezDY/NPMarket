@@ -110,11 +110,23 @@
         app:tabPadding="4dp"
         android:background="@color/white"/>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_searchNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tab_search"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/black_222222"
+        android:text="找到xx个商品"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:visibility="gone"
         android:id="@+id/rv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tab_search"
+        app:layout_constraintTop_toBottomOf="@id/tv_searchNum"
         android:layout_marginTop="24dp"/>
 </android.support.constraint.ConstraintLayout>
