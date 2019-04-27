@@ -6,7 +6,43 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.guhecloud.rudez.npmarket.ui.marketprice.CollectPriceRecordActivity">
-    <include layout="@layout/view_toolbar"/>
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginTop="26dp"
+        android:padding="8dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@mipmap/icon_back"/>
+        <com.guhecloud.rudez.npmarket.widgit.EditText_Clear
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:hint="搜索"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="12dp"
+            android:background="@drawable/shape_search_bg_gray"/>
+        <ImageView
+            android:id="@+id/img_weekSellect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:src="@mipmap/icon_menu"/>
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_price_record"
         android:layout_width="match_parent"

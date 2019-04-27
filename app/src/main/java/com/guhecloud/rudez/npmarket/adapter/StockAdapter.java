@@ -17,6 +17,6 @@ public class StockAdapter extends BaseQuickAdapter<MerchantDetail.GoodsEnter,Bas
     @Override
     protected void convert(BaseViewHolder helper, MerchantDetail.GoodsEnter item) {
         helper.setText(R.id.tv_stockTime,item.enterDt);
-        helper.setText(R.id.tv_stockNum,item.wgtD);
+        helper.setText(R.id.tv_stockNum,item.offerName+item.wgtD+item.unit);
     }
 }

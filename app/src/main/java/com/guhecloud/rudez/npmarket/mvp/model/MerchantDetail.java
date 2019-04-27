@@ -49,28 +49,30 @@ public class MerchantDetail{
 
     public static class GoodsEnter {
         /**
-         * custId : string
-         * custName : string
-         * dateNo : 20190412
-         * enterDt : 2019-04-23T09:11:18.558Z
          * id : 1
+         * dateNo : 20190427
          * monthNo : 201904
-         * offerAlias : string
-         * offerId : string
-         * offerName : string
-         * wgtD : 1
+         * custId : 01
+         * custName : 客户01
+         * offerId : 010101
+         * enterDt : 2019-04-27 18:41:44
+         * wgtD : 5.69
+         * offerName : 土豆
+         * offerAlias : null
          */
 
+        public int id;
+        public int dateNo;
+        public int monthNo;
         public String custId;
         public String custName;
-        public int dateNo;
-        public String enterDt;
-        public int id;
-        public int monthNo;
-        public String offerAlias;
         public String offerId;
+        public String enterDt;
+        public double wgtD;
+        public String unit;
         public String offerName;
-        public int wgtD;
+        public String offerAlias;
+
     }
 
     public static class Booth {

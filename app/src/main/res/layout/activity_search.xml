@@ -18,25 +18,6 @@
         android:focusableInTouchMode="true"
         android:gravity="center_vertical">
 
-        <!--搜索框-->
-        <!--<com.guhecloud.rudez.npmarket.widgit.wavesidebar.SearchEditText-->
-            <!--android:id="@+id/et_search"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:paddingLeft="16dp"-->
-            <!--android:paddingRight="12dp"-->
-            <!--android:background="@drawable/shape_search_bg_gray"-->
-            <!--android:drawableLeft="@mipmap/icon_search"-->
-            <!--android:drawablePadding="5dp"-->
-            <!--android:drawableStart="@mipmap/icon_search"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:hint="搜索"-->
-            <!--android:imeOptions="actionSearch"-->
-            <!--android:maxLines="1"-->
-            <!--android:textSize="16sp"-->
-            <!--app:drawableDel="@mipmap/edit_delete"/>-->
         <com.guhecloud.rudez.npmarket.widgit.EditText_Clear
             android:id="@+id/et_search"
             android:layout_width="0dp"

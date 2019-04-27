@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.mvp.contract.MineContract;
+import com.guhecloud.rudez.npmarket.mvp.model.User;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MinePresenter;
 import com.guhecloud.rudez.npmarket.ui.main.HomeBaseActivity;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
@@ -50,7 +51,8 @@ public class MineActivity extends HomeBaseActivity<MinePresenter> implements Min
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-
+        tv_username.setText("登录名："+User.getInstance().userName);
+        tv_nickname.setText(User.getInstance().alias);
     }
 
     @OnClick({R.id.img_avatar,R.id.img_arrow,R.id.layout_safety,R.id.layout_auto,R.id.layout_feedback,R.id.layout_about})
@@ -63,7 +65,7 @@ public class MineActivity extends HomeBaseActivity<MinePresenter> implements Min
                 startAty(UserInfoActivity.class);
                 break;
             case R.id.layout_safety:
-
+                startAty(ChangePwdActivity.class);
                 break;
             case R.id.layout_auto:
                 startAty(AutoSettingActivity.class);

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.guhecloud.rudez.npmarket">
 
+    <uses-permission android:name="com.guhecloud.rudez.npmarket.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,8 +34,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <service android:name="org.eclipse.paho.android.service.MqttService" /> <!-- MqttService -->
-        <service android:name=".service.MyMqttService" /> <!-- MyMqttService -->
+        <!-- 替换原生极光推送接收器 -->
+        <receiver
+            android:name=".jpush.MyPushReceiver"
+            android:enabled="true"
+            android:exported="false"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.guhecloud.rudez.npmarket" /> <!--JPush上注册的包名 -->
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".ui.main.MainActivity"
@@ -67,7 +82,14 @@
         <activity android:name=".ui.search.MerchantDetailsActivity" />
         <activity android:name=".ui.search.CarDetailsActivity" />
         <activity android:name=".ui.marketprice.MarketPriceActivity" />
-        <activity android:name=".ui.marketprice.CollectPriceRecordActivity"></activity>
+        <activity android:name=".ui.marketprice.CollectPriceRecordActivity" />
+        <activity android:name=".ui.marketprice.FiltrateActivity" />
+        <activity
+            android:name=".ui.marketprice.CollectPriceActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".ui.marketprice.CoPriSearchActivity" />
+        <activity android:name=".ui.marketprice.CoPriTaskActivity" />
+        <activity android:name=".ui.mine.ChangePwdActivity"></activity>
     </application>
 
 </manifest>

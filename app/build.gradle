@@ -12,6 +12,17 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "843cf77ce8390fffcac6fdbc", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
@@ -81,4 +92,10 @@ dependencies {
     compile 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.5'
     compile 'org.xutils:xutils:3.5.1'
     compile 'com.alibaba:fastjson:1.2.33'
+
+    // 此处以JPush 3.2.0 版本为例。
+    compile 'cn.jiguang.sdk:jpush:3.2.0'
+    // 此处以JCore 1.2.7 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.2.7'
+
 }

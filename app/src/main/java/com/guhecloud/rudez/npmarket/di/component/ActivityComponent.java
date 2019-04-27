@@ -7,6 +7,8 @@ import com.guhecloud.rudez.npmarket.di.scope.AcitvityScope;
 import com.guhecloud.rudez.npmarket.ui.contacts.ContactsActivity;
 import com.guhecloud.rudez.npmarket.ui.login.LoginActivity;
 import com.guhecloud.rudez.npmarket.ui.main.MainActivity;
+import com.guhecloud.rudez.npmarket.ui.marketprice.CoPriSearchActivity;
+import com.guhecloud.rudez.npmarket.ui.marketprice.CollectPriceActivity;
 import com.guhecloud.rudez.npmarket.ui.marketprice.CollectPriceRecordActivity;
 import com.guhecloud.rudez.npmarket.ui.marketprice.MarketPriceActivity;
 import com.guhecloud.rudez.npmarket.ui.menumanager.MenuManagerActivity;
@@ -38,5 +40,7 @@ public interface ActivityComponent {
     void inject(SearchActivity searchActivity);
     void inject(MarketPriceActivity marketPriceActivity);
     void inject(CollectPriceRecordActivity collectPriceRecordActivity);
+    void inject(CollectPriceActivity collectPriceActivity);
+    void inject(CoPriSearchActivity coPriSearchActivity);
 
 }

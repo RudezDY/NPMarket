@@ -1,6 +1,8 @@
 package com.guhecloud.rudez.npmarket.util;
 
 
+import android.util.Log;
+
 import com.guhecloud.rudez.npmarket.BuildConfig;
 import com.orhanobut.logger.Logger;
 
@@ -42,5 +44,12 @@ public class LogUtil {
         if(isDebug) {
             Logger.i(msg);
         }
+    }
+
+    public static void logTest1(){
+        Log.i("测试测试测试","来了老弟");
+    }
+    public static void logTest2(){
+        Log.i("测试测试测试","来了老姐");
     }
 }

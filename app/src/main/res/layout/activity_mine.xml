@@ -19,8 +19,8 @@
             android:background="@mipmap/mine_bg">
             <com.guhecloud.rudez.npmarket.widgit.CircleImageView
                 android:id="@+id/img_avatar"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_margin="12dp"
                 android:src="@mipmap/avatar"/>
             <LinearLayout
@@ -47,6 +47,7 @@
                     android:textColor="@color/white"/>
             </LinearLayout>
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/img_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
                 <LinearLayout
                     android:id="@+id/layout_safety"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="56dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <ImageView
@@ -86,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="16sp"
-                        android:text="安全设置"/>
+                        android:text="修改密码"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,7 +97,7 @@
                 <LinearLayout
                     android:id="@+id/layout_auto"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="56dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <ImageView
@@ -119,7 +120,7 @@
                 <LinearLayout
                     android:id="@+id/layout_feedback"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="56dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <ImageView
@@ -142,7 +143,7 @@
                 <LinearLayout
                     android:id="@+id/layout_about"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="56dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <ImageView
@@ -156,6 +157,29 @@
                         android:layout_weight="1"
                         android:textSize="16sp"
                         android:text="关于"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:src="@mipmap/arrow_right"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@mipmap/about"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:text="使用帮助"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

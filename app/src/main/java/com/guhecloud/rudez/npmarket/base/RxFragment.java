@@ -1,17 +1,14 @@
 package com.guhecloud.rudez.npmarket.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-
 import com.guhecloud.rudez.npmarket.app.App;
 import com.guhecloud.rudez.npmarket.di.component.DaggerFragmentComponent;
 import com.guhecloud.rudez.npmarket.di.component.FragmentComponent;
 import com.guhecloud.rudez.npmarket.di.module.FragmentModule;
-import com.guhecloud.rudez.npmarket.util.ActivityUtil;
 import com.guhecloud.rudez.npmarket.util.LoadingDialogUtil;
 import com.guhecloud.rudez.npmarket.util.ToastUtil;
 
@@ -37,12 +34,12 @@ public abstract class RxFragment<T extends BasePresenter> extends BaseFragment i
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        injectObject();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        injectObject();
+
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }

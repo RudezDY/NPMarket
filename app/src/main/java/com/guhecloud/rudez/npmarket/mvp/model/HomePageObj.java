@@ -11,7 +11,7 @@ public class HomePageObj {
     public List<AppletModel> applicationList;
     public List<GTask> todoList;
 
-    class BannerObj{
+    public class BannerObj{
 
         /**
          * id : 5701

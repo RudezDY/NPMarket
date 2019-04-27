@@ -108,6 +108,7 @@ public class HttpRequestUtil {
             }
             else {
                 mHttpCallBack.onFailure(autoResult.msg);
+                Log.w("msg",autoResult.msg);
             }
         }
 

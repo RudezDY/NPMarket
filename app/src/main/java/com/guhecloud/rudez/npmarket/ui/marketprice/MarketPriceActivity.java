@@ -73,7 +73,7 @@ public class MarketPriceActivity extends RxActivity<MarketPricePresenter>impleme
                 startAty(CollectPriceRecordActivity.class);
                 break;
             case R.id.btn_add:
-
+                startAty(CollectPriceActivity.class);
                 break;
         }
     }

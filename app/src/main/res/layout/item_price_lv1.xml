@@ -7,37 +7,68 @@
     android:orientation="horizontal">
     <TextView
         android:id="@+id/tv_goodsName"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="豌豆"/>
     <TextView
         android:id="@+id/tv_price_thisWeek"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="3.20"/>
     <TextView
         android:id="@+id/tv_price_lastWeek"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="2.20"/>
     <TextView
         android:id="@+id/tv_change"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="20%"/>
     <TextView
-        android:id="@+id/tv_price_middle"
-        android:layout_width="0dp"
+        android:id="@+id/tv_price_middle1"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:gravity="center"
+        android:text="2.60"/>
+    <TextView
+        android:id="@+id/tv_price_middle2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2.60"/>
+    <TextView
+        android:id="@+id/tv_price_middle3"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2.60"/>
+    <TextView
+        android:id="@+id/tv_price_middle4"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2.60"/>
+    <TextView
+        android:id="@+id/tv_price_middle5"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2.60"/>
+    <TextView
+        android:id="@+id/tv_price_middle6"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2.60"/>
+    <TextView
+        android:id="@+id/tv_price_middle7"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="2.60"/>
 

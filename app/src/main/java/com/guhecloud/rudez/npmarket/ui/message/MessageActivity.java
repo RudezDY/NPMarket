@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.guhecloud.rudez.npmarket.R;
 import com.guhecloud.rudez.npmarket.mvp.contract.MessageContract;
+import com.guhecloud.rudez.npmarket.mvp.model.MsgCountObj;
 import com.guhecloud.rudez.npmarket.mvp.presenter.MessagePresenter;
 import com.guhecloud.rudez.npmarket.ui.main.HomeBaseActivity;
 
@@ -20,8 +21,8 @@ import butterknife.BindView;
 
 public class MessageActivity extends HomeBaseActivity<MessagePresenter> implements MessageContract.View {
 
-    public static final String POSITON = "POSITION";
-    public static final String[] title = {"预警提醒", "待办", "通知公告"};
+    public static final String POSITON = "position";
+    public static final String[] titles = {"预警提醒", "待办", "通知公告"};
 
     @BindView(R.id.view_toolbar)
     Toolbar viewToolbar;
@@ -51,6 +52,9 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
         setToolBar(viewToolbar,"消息中心");
 //        vpTask.setOffscreenPageLimit(title.length);
 
+        mPresenter.getMsgCount();
+
+
 
         tab_message.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -59,11 +63,12 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
                 if (null == view) {
                     tab.setCustomView(R.layout.layout_msg_tab);
                 }
-                TextView textView = tab.getCustomView().findViewById(R.id.tv_msg_tab);
-                textView.setText(title[tab.getPosition()]);
-                textView.setTextColor(tab_message.getTabTextColors());
-                textView.setTypeface(Typeface.DEFAULT_BOLD);
-                textView.setTextSize(18);
+
+                TextView tvName = tab.getCustomView().findViewById(R.id.tv_msg_tab);
+                tvName.setText(titles[tab.getPosition()]);
+                tvName.setTextColor(tab_message.getTabTextColors());
+                tvName.setTypeface(Typeface.DEFAULT_BOLD);
+                tvName.setTextSize(18);
             }
 
             @Override
@@ -73,7 +78,7 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
                     tab.setCustomView(R.layout.layout_msg_tab);
                 }
                 TextView textView = tab.getCustomView().findViewById(R.id.tv_msg_tab);
-                textView.setText(title[tab.getPosition()]);
+                textView.setText(titles[tab.getPosition()]);
                 textView.setTextSize(16);
                 textView.setTypeface(Typeface.DEFAULT);
             }
@@ -87,6 +92,31 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
         viewpager_message.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         tab_message.setupWithViewPager(viewpager_message);
         viewpager_message.setCurrentItem(position);
+
+
+    }
+
+    @Override
+    public void onMsgCountGet(MsgCountObj msgCountObj) {
+//        LogUtil.logTest1();
+//        for (int i = 0;i<titles.length;i++){
+//            TabLayout.Tab tab = tab_message.getTabAt(i);
+//            tab.setCustomView(R.layout.layout_msg_tab);
+//            TextView tvNum = tab.getCustomView().findViewById(R.id.tv_tab_num);
+//            TextView tvName = tab.getCustomView().findViewById(R.id.tv_msg_tab);
+//            tvName.setText(titles[tab.getPosition()]);
+//
+//            if (tvName.getText().toString().equals(titles[0])){
+//                tvNum.setText(msgCountObj.warningCount+"");
+//            }
+//            else if (tvName.getText().toString().equals(titles[1])){
+//                tvNum.setText(msgCountObj.unDealTodoCount+"");
+//            }
+//            else if (tvName.getText().toString().equals(titles[2])){
+//                tvNum.setText(msgCountObj.unReadNoticeCount+"");
+//            }
+//
+//        }
     }
 
     public class PagerAdapter extends FragmentPagerAdapter {
@@ -99,18 +129,18 @@ public class MessageActivity extends HomeBaseActivity<MessagePresenter> implemen
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return MessageFragment.newInstance(position, title[position]);
+            return MessageFragment.newInstance(position, titles[position]);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return title[position];
+            return titles[position];
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return title.length;
+            return titles.length;
         }
     }
 

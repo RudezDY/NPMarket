@@ -20,6 +20,7 @@
             app:banner_isNumberIndicator="true"
             app:banner_indicatorGravity="right"
             app:banner_numberIndicatorTextSize="14sp"
+            app:banner_placeholderDrawable="@color/orange"
             app:banner_pageChangeDuration="1000"
             app:banner_pointAutoPlayAble="false"
             app:banner_pointContainerBackground="@android:color/transparent"

@@ -20,6 +20,7 @@ import com.guhecloud.rudez.npmarket.widgit.ClearWriteEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 public class LoginActivity extends RxActivity<LoginPresenter> implements LoginContract.View {
 
@@ -47,6 +48,8 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
     boolean isCanGetCode = true;//是否处于能获取验证码状态
     CountDownTimer countDownTimer;//计时器
 
+    String userName,pwd;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -54,6 +57,10 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+
+        et_tel.setText("13888888888");
+        et_pwd.setText("111");
+
         countDownTimer=new CountDownTimer(60000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -111,8 +118,9 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
                 startAty(ResetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-
-                mPresenter.login("faircheng", "111");
+                userName=et_tel.getText().toString().trim();
+                pwd=et_pwd.getText().toString().trim();
+                mPresenter.login(userName, pwd);
 
                 break;
         }
@@ -121,6 +129,8 @@ public class LoginActivity extends RxActivity<LoginPresenter> implements LoginCo
     @Override
     public void onLoginSuccess(User user) {
         User.getInstance().setUser(user);
+
+        JPushInterface.setAlias(getApplicationContext(),111,userName);
         startAty(MainActivity.class);
         activityWeakReference.get().finish();
     }

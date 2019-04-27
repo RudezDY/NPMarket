@@ -27,6 +27,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Stack;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by Chanin on 2017/6/9.
@@ -67,6 +69,8 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         closeAndroidPDialog();
         instance = this;
         //测量屏幕尺寸

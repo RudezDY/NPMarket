@@ -2,7 +2,6 @@ package com.guhecloud.rudez.npmarket.ui.main;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,7 +69,7 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
         et_search.setFocusable(false);
         initRv();
         mPresenter.getHomePage();
-        setBanner();
+//        setBanner();
     }
 
     private void initRv() {
@@ -137,39 +136,65 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
         super.onResume();
     }
 
-    private void setBanner() {
-        banner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
-            @Override
-            public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
-                GlideApp.with(thisActivity).load(model).centerCrop().into(itemView);
-            }
-        });
+    private void setBanner(List<HomePageObj.BannerObj> banners) {
+        if (banners==null|| banners.size()<=0)
+            return;
 
-        List<String> imgUrls=new ArrayList<>();
-        imgUrls.add("http://d.5857.com/yushe_160219/005.jpg");
-        imgUrls.add("http://old.bz55.com/uploads/allimg/141104/1-1411041K422.jpg");
-        imgUrls.add("http://old.bz55.com/uploads/allimg/141104/1-1411041K425.jpg");
-        imgUrls.add("http://up.enterdesk.com/edpic_360_360/1d/35/87/1d3587b3be79869936dc237bc0ecc119.jpg");
-        imgUrls.add("http://www.xxthemes.com/article/UploadPic/2013-2/2013222238890171.jpg");
-        List<String > tipsList = new ArrayList<>();
-        for (int i=0;i<imgUrls.size();i++) {
-            tipsList.add("pic"+i);
+        List<View> views=new ArrayList<>();
+        for (final HomePageObj.BannerObj bannerObj:banners){
+            View view=LayoutInflater.from(thisActivity).inflate(R.layout.item_bgbanner_home,null);
+            ImageView img =view.findViewById(R.id.img_bg);
+            TextView tv_title=view.findViewById(R.id.tv_bannerTitle);
+            TextView tv_content=view.findViewById(R.id.tv_bannerContent);
+            GlideApp.with(thisActivity).load(bannerObj.noticeImgUrl).into(img);
+            tv_title.setText(bannerObj.noticeTitle);
+            tv_content.setText(bannerObj.noticeContent);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ToastUtil.show(bannerObj.noticeTitle);
+                }
+            });
+            views.add(view);
         }
+        banner.setData(views);
+
+
+
+
+
+//        banner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
+//            @Override
+//            public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
+//                GlideApp.with(thisActivity).load(model).centerCrop().into(itemView);
+//            }
+//        });
+
+//        List<String> imgUrls=new ArrayList<>();
+//        imgUrls.add("http://d.5857.com/yushe_160219/005.jpg");
+//        imgUrls.add("http://old.bz55.com/uploads/allimg/141104/1-1411041K422.jpg");
+//        imgUrls.add("http://old.bz55.com/uploads/allimg/141104/1-1411041K425.jpg");
+//        imgUrls.add("http://up.enterdesk.com/edpic_360_360/1d/35/87/1d3587b3be79869936dc237bc0ecc119.jpg");
+//        imgUrls.add("http://www.xxthemes.com/article/UploadPic/2013-2/2013222238890171.jpg");
+//        List<String > tipsList = new ArrayList<>();
+//        for (int i=0;i<imgUrls.size();i++) {
+//            tipsList.add("pic"+i);
+//        }
         /**
          * 设置是否开启自动轮播，需要在 setData 方法之前调用，并且调了该方法后必须再调用一次 setData 方法
          * 例如根据图片当图片数量大于 1 时开启自动轮播，等于 1 时不开启自动轮播
          */
-        banner.setAutoPlayAble(imgUrls.size()>1);
+        banner.setAutoPlayAble(views.size()>1);
         banner.setAutoPlayInterval(3000);//间隔时间
         banner.setAspectRatio(16f/9);//设置宽高比，float类型
-        banner.setData(imgUrls,tipsList);
+//        banner.setData(imgUrls,tipsList);
 
-        banner.setDelegate(new BGABanner.Delegate<ImageView,String>() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
-                ToastUtil.shortShow("位置"+position+"  地址："+model);
-            }
-        });
+//        banner.setDelegate(new BGABanner.Delegate<View,HomePageObj.BannerObj>() {
+//            @Override
+//            public void onBannerItemClick(BGABanner banner, View itemView, @Nullable HomePageObj.BannerObj model, int position) {
+//                ToastUtil.show(model.noticeTitle);
+//            }
+//        });
     }
 
     @Override
@@ -191,5 +216,6 @@ public class MainActivity extends HomeBaseActivity<MainPresenter> implements Mai
     public void onHomePageGet(HomePageObj homePageObj) {
         appletAdapter.setNewData(homePageObj.applicationList);
         gTaskAdapter.setNewData(homePageObj.todoList);
+        setBanner(homePageObj.bannerList);
     }
 }

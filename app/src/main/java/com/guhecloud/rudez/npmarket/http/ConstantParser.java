@@ -6,6 +6,7 @@ package com.guhecloud.rudez.npmarket.http;
 public class ConstantParser {
     // 接口前面部分
     public static final String HTTP_URI = "http://132.232.11.106:8182/";
+//    public static final String HTTP_URI = "http://192.168.30.45:8182/";
 
     //获取部门
     public static final String GETDEPT = "address/dept";
@@ -41,5 +42,29 @@ public class ConstantParser {
     public static final String GETTIMEFRAME = "price/getWeekList";
     //采价记录
     public static final String GETPRICERECORD = "price/getPriceList";
+    //采价查询商品
+    public static final String GETPRICEGOODS = "price/getOffer";
+    //根据采价任务查商品
+    public static final String GETPRICEGOODSBYTASK = "price/getPriceTaskGoods";
+    //根据商品查商家
+    public static final String GETMERCHANTBYGOODS = "price/getCustByOffer";
+    //采价
+    public static final String COLLECTPRICE = "price/addPrice";
+    //获取区县
+    public static final String GETAREA = "area/area";
+    //获取地市
+    public static final String GETCITY = "area/city";
+    //获取省级单位
+    public static final String GETPROVINCE = "area/province";
+    //上传图片
+    public static final String UPLOAD = "file/upload";
+    //获取未读消息数量
+    public static final String GETMSGCOUNT = "message/getMessageCount";
+    //获取通知公告列表
+    public static final String GETMSGNOTICE = "message/getNoticeByUser";
+    //获取待办列表
+    public static final String GETMSGTOCO = "message/getUserTodoList";
+    //获取预警提醒列表
+    public static final String GETMSGWARNING = "message/getWarningList";
 
 }
