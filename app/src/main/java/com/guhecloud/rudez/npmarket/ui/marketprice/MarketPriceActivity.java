@@ -36,9 +36,27 @@ public class MarketPriceActivity extends RxActivity<MarketPricePresenter>impleme
     ImageButton btn_add;
     @BindView(R.id.tv_toolbarRight)
     TextView tv_toolbarRight;
+    @BindView(R.id.tv_price_middle1)
+    TextView tv_price_middle1;
+    @BindView(R.id.tv_price_middle2)
+    TextView tv_price_middle2;
+    @BindView(R.id.tv_price_middle3)
+    TextView tv_price_middle3;
+    @BindView(R.id.tv_price_middle4)
+    TextView tv_price_middle4;
+    @BindView(R.id.tv_price_middle5)
+    TextView tv_price_middle5;
+    @BindView(R.id.tv_price_middle6)
+    TextView tv_price_middle6;
+    @BindView(R.id.tv_price_middle7)
+    TextView tv_price_middle7;
+
+    TextView[] midTvs={tv_price_middle1,tv_price_middle2,tv_price_middle3,tv_price_middle4,tv_price_middle5,tv_price_middle6,tv_price_middle7};
 
     MarketPriceAdapter adapter;
     List<MultiItemEntity> dataList;
+
+    List<String> dateList;//中准价日期
     @Override
     protected void injectObject() {
         getActivityComponent().inject(this);
@@ -95,6 +113,12 @@ public class MarketPriceActivity extends RxActivity<MarketPricePresenter>impleme
 
         adapter.setNewData(dataList);
         adapter.expandAll();
+
+        dateList = list.get(0).dateList;
+        for (int i=0;i<midTvs.length;i++){
+            midTvs[i].setText(dateList.get(i));
+        }
+
     }
 
     @Override

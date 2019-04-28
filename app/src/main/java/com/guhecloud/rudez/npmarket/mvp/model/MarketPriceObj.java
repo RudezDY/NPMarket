@@ -24,6 +24,7 @@ public class MarketPriceObj  extends AbstractExpandableItem<MarketPriceObj.Price
     public String startDate;
     public String endDate;
     public List<PriceList> priceList;
+    public List<String> dateList;
 
     @Override
     public int getLevel() {
